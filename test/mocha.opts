@@ -1,0 +1,9 @@
+--timeout 500
+--bail
+--require index.js
+--require coffee-script/register
+--compilers coffee:coffee-script/register
+-R spec
+-u mocha-given-2
+
+test/**/*.coffee test/**/*.js
