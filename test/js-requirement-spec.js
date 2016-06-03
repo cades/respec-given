@@ -4,13 +4,13 @@ describe("extra requirement for JS testing", function() {
 
   context('with ES5 function', function() {
     Then(function(){
-      return 1 === 1
+      expect(1).to.be(1)
     })
   })
 
   context('with ES6 arrow function', function() {
     Then(() => {
-      return 1 === 1
+      expect(1).to.be(1)
     })
   })
 
