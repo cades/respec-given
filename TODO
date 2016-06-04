@@ -1,10 +1,10 @@
-- 以 ES5 改寫
-- 把行為修正到跟 mocha-gwt 一樣(應該說是跟 rspec-given一樣)
-  - 尤其是 Invariant 的行為
-- invariant
+when capture error
+  - 要能捕捉到非 undefined 的所有值
+
+invariant
   - invariant fail 的訊息更易懂
   - 支援 return false 就 fail
 
+and
 
-## bonus
-- 學 mocha-gwt 支援 return promise
+natrual assertion
