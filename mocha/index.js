@@ -8,16 +8,16 @@ module.exports = Mocha.interfaces['respec-given'] = function(suite) {
 
     var core = factory.createCore({
       firstSuite: suite,
-      addSuiteCallback: function(currentSuite, title, cb) {
+      addSuiteCallback: function(currentSuite, title) {
         var suite = Suite.create(currentSuite, title)
         suite.file = file
-        cb(suite)
+        return suite
       },
-      addSkippedSuiteCallback: function(currentSuite, title, cb) {
+      addSkippedSuiteCallback: function(currentSuite, title) {
         var suite = Suite.create(currentSuite, title)
         suite.file = file
         suite.pending = true
-        cb(suite)
+        return suite
       },
       addTestCallback: function(suite, label, fn) {
         var test = new Test(label, fn)
