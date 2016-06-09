@@ -1,1 +1,1 @@
-module.exports = require('./lib/mocha-given-2');
+module.exports = require('./mocha/index');
