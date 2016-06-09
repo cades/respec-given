@@ -4,6 +4,7 @@
 --require coffee-script/register
 --compilers coffee:coffee-script/register
 -R spec
--u mocha-given-2
+-u respec-given/mocha
+
 
 test/**/*.coffee test/**/*.js

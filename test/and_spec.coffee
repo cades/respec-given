@@ -1,41 +1,35 @@
-assert = require 'assert'
+expect = require 'expect.js'
 
-describe "And", ->
+describe "And(fn)", ->
 
-  Given 'info', []
+  Given 'info', -> []
 
   describe "And is called after Then", ->
     Then -> @info.push "T"
     And -> @info.push "A"
-    And -> assert.equal ["T", "A"], @info
+    And -> expect(["T", "A"]).to.eql @info
 
-  # describe "And is called only once with multiple Thens" do
-  #   Then { info << "T" }
-  #   Then { info << "T2" }
-  #   And { given_assert(info == ["T"] || info == ["T2"]) }
-  # end
+  describe "And is called only once with multiple Thens", ->
+    Then -> @info.push "T"
+    Then -> @info.push "T2"
+    And -> expect(@info.toString() == "T" || @info.toString() == "T2")
 
-  # describe "Inherited Ands are not run" do
-  #   Then { info << "T-OUTER" }
-  #   And { info << "A-OUTER" }
-  #   And { given_assert_equal ["T-OUTER", "A-OUTER"], info }
+  describe "Inherited Ands are not run", ->
+    Then -> @info.push "T-OUTER"
+    And -> @info.push "A-OUTER"
+    And -> expect(@info).to.eql ["T-OUTER", "A-OUTER"]
 
-  #   context "inner" do
-  #     Then { info << "T-INNER" }
-  #     And { info << "A-INNER" }
-  #     And { given_assert_equal ["T-INNER", "A-INNER"], info }
-  #   end
-  # end
+    context "inner", ->
+      Then -> @info.push "T-INNER"
+      And -> @info.push "A-INNER"
+      And -> expect(@info).to.eql ["T-INNER", "A-INNER"]
 
-  # describe "Ands require a Then" do
-  #   begin
-  #     And { }
-  #   rescue StandardError => ex
-  #     @message = ex.message
-  #   end
+  describe "Ands require a Then", ->
+    message = null
+    try
+      And ->
+    catch e
+      message = e.message
 
-  #   it "defines a message" do
-  #     message = self.class.instance_eval { @message }
-  #     given_assert_match(/and.*without.*then/i, message)
-  #   end
-  # end
+    it "defines a message", ->
+      expect(message).to.match /and.*without.*then/i

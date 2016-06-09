@@ -1,5 +1,5 @@
 {
-  "name": "mocha-given-2",
+  "name": "respec-given",
   "version": "0.0.1",
   "description": "porting of rspec/given to JS world, on mocha",
   "author": {
@@ -8,8 +8,13 @@
   },
   "main": "./index.js",
   "dependencies": {
+    "async": "1.5.2",
     "coffee-script": "1.10.0",
+    "escodegen": "1.8.0",
+    "esprima": "2.7.2",
+    "estraverse": "4.2.0",
     "lodash": "4.13.1",
+    "minimatch": "3.0.0",
     "mocha": "2.4.3",
     "parse-function": "2.3.2",
     "should": "9.0.0"
@@ -23,7 +28,7 @@
   },
   "scripts": {
     "test": "mocha",
-    "link": "mkdir -p node_modules/mocha-given-2 && cd node_modules/mocha-given-2 && ln -s ../../package.json package.json && ln -s ../../index.js index.js && ln -s ../../lib lib && cd -"
+    "link": "mkdir -p node_modules/respec-given && cd node_modules/respec-given && ln -s ../../package.json package.json && ln -s ../../index.js index.js && ln -s ../../lib lib && ln -s ../../mocha mocha && cd -"
   },
   "keywords": [
     "mocha",

@@ -1,5 +1,5 @@
 assert = require 'assert'
-should = require 'should'
+expect = require 'expect.js'
 
 describe 'Given(fn)', ->
   describe 'should be executed immediately', ->
@@ -46,14 +46,8 @@ describe 'Given(varname, fn)', ->
     Then -> assert.equal @user, 'cades'
 
   describe 'should be lazy', ->
-    startTime = Date.now()
-    evaluateTime = null
-    Given 'x', -> evaluateTime = Date.now()
-    When (done) ->
-      setTimeout =>
-        @x and done()
-      , 30
-    Then -> assert evaluateTime - startTime > 30
+    Given 'x', -> throw new Error 'oops!'
+    Then -> assert true
 
   describe 'should be executed only once', ->
     cnt = 0
@@ -72,6 +66,11 @@ describe 'Given(varname, fn)', ->
     Given 'x', -> 2
     Then -> assert.equal @x, 2
 
+  describe 'if return nothing, var is still set', ->
+    Given 'x', -> return
+    Then -> assert.equal @x, undefined
+    Then -> assert 'x' of @
+
   describe 'does not support async, but with When we can still write clean test', ->
 
     context 'subject is a function that consume a node-style callback', ->
@@ -87,41 +86,20 @@ describe 'Given(varname, fn)', ->
       When 'result', -> @subject
       Then -> assert.equal @result, 'cool'
 
-describe 'Given(varname, value)', ->
-
-  context 'with immediate value', ->
-    Given 'user', 'cades'
-    Then -> assert.equal @user, 'cades'
-
-  context 'with Promise (this is not recommended)', ->
-    Given 'subject', Promise.resolve 'cool'
-    When 'result', -> @subject
-    Then -> assert.equal @result, 'cool'
-
-  context 'with a rejected promise', ->
-    Given 'subject', Promise.reject 'oops!'
-    When 'result', -> @subject
-    Then -> assert.equal @result, 'oops!'
-
 describe 'Given(hash)', ->
-
-  context 'with immediate value', ->
-    Given
-      user: 'cades'
-      pass: 'pass'
-    Then -> assert.equal @user, 'cades'
-    Then -> assert.equal @pass, 'pass'
 
   context 'with function', ->
     Given
       user: -> 'cades'
-      pass: 'pass'
+      pass: -> 'pass'
     Then -> assert.equal @user, 'cades'
     Then -> assert.equal @pass, 'pass'
 
-  context 'with Promise', ->
-    Given
-      user: Promise.resolve 'cades'
-      pass: 'pass'
-    Then -> @user.should.be.finally.equal 'cades'
-    Then -> assert.equal @pass, 'pass'
+describe 'Given(varname, value) is forbidden', ->
+
+  message = null
+  try
+    Given x: 1
+  catch e
+    message = e.message
+  Then -> expect(message).to.match /Given.*no function provided/

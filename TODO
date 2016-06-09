@@ -1,10 +1,47 @@
-when capture error
-  - 要能捕捉到非 undefined 的所有值
-
 invariant
   - invariant fail 的訊息更易懂
   - 支援 return false 就 fail
 
-and
-
 natrual assertion
+
+async.series 可以處理 throw, promise, 卻不能處理 return false.
+
+
+
+-------------- done -----------------
+
+
+整理 code, 減少重複
+
+再抽出一層抽象層, 讓跟 mocha 相依的部份只剩下一層 adadpter
+  this binding 是一個問題. 把 Given/When/Then 綁到 Core object 上,
+  this 就必須指向它而非 ctx = {}, 而這不是我們想要的
+  必須在 factory 那邊做...
+
+
+             mocha interface
+                   |
+                 Core (有沒有更好的名字...)
+                   |
+              BlockManager
+                   |
+                 Stack
+
+不依賴 mocha 的 beforeEach / afterEach
+
+
+afterEach clean up 只能在宣告的那一層，因此內層沒有 afterEach cleanup
+當然也可以沿著 prototype chain 把 context 用 for (var x in ctx) 全部 delete 掉, BUT!
+object prototype chain 的硬傷：一旦清掉就沒了. 而 Given 的 defineProperty 只在 declare time 執行一次阿！
+所以連 Given/When 都必須記下來了...
+
+踩到大雷  難快 given.js 不支援 Given 'x', 1   只支援 Given 'x', -> 1
+因為 Given 'x', [] 會很有問題...
+因為 closure 的關係, 每次都會 reference 到同一個變數. 你也無法複製, 也許淺層複製並不夠. 深層複製一定正確嗎?
+這不是我們可以決定的. 這責任要讓開發者去擔
+Given 'x', 1 允許數字、字串、布林、null、undefined、NaN 這些...?
+決定：完全禁止.
+理由：
+連字串都可能會變, object 跟 array 更是.
+唯一不變的只有 primitive type 不會變, 那你直接用就好(直接寫 null, 直接寫 123), 何須 Given?
+

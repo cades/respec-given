@@ -1,22 +1,14 @@
 assert = require 'assert'
-Character = (name) ->
-  hit_points: 20
-  attack: (anemy, n) ->
-    anemy.hit_points -= n
+expect = require 'expect.js'
 
-describe "GIVEN(var, value)", ->
-
-  describe 'support immediate value', ->
-    GIVEN 'x', 1
-    Then -> assert.equal @x, 1
-
-  describe 'support promise', ->
-    GIVEN 'x', Promise.resolve 1
-    Then -> assert.equal @x, 1
+describe "GIVEN(var, fn)", ->
 
   context 'example: Character can be damaged', ->
+    Character = (name) ->
+      hit_points: 20
+      attack: (anemy, n) -> anemy.hit_points -= n
 
-    describe 'immediately memorize original hp', ->
+    describe 'sync function', ->
       Given 'attacker', -> Character("Attacker")
       Given 'defender', -> Character("Defender")
       GIVEN 'original_hp', -> @defender.hit_points
@@ -25,8 +17,16 @@ describe "GIVEN(var, value)", ->
 
       Then -> assert.equal @defender.hit_points, @original_hp - 1
 
-    describe 'immediate give can handle async operation. wait until I memorize original hp', ->
+    describe 'sync function that return a promise', ->
+      Given 'attacker', -> Character("Attacker")
+      Given 'defender', -> Character("Defender")
+      GIVEN 'original_hp', -> Promise.resolve(@defender.hit_points)
 
+      When -> @attacker.attack(@defender, 1)
+
+      Then -> assert.equal @defender.hit_points, @original_hp - 1
+
+    describe 'async function', ->
       context 'with callback', ->
         Given 'attacker', -> Character("Attacker")
         Given 'defender', -> Character("Defender")
@@ -38,46 +38,17 @@ describe "GIVEN(var, value)", ->
 
         Then -> assert.equal @defender.hit_points, @original_hp - 1
 
-      context 'with Promise', ->
-        Given 'attacker', -> Character("Attacker")
-        Given 'defender', -> Character("Defender")
-        GIVEN 'original_hp', -> Promise.resolve(@defender.hit_points)
-
-        When -> @attacker.attack(@defender, 1)
-
-        Then -> assert.equal @defender.hit_points, @original_hp - 1
-
 describe "GIVEN(hash)", ->
 
-  context 'example: Character can be damaged', ->
+  describe 'support function', ->
+    GIVEN result: -> 'cool'
+    Then -> assert.equal @result, 'cool'
 
-    describe 'immediately memorize original hp', ->
-      Given 'attacker', -> Character("Attacker")
-      Given 'defender', -> Character("Defender")
-      GIVEN original_hp: -> @defender.hit_points
+describe 'GIVEN(varname, value) is forbidden', ->
 
-      When -> @attacker.attack(@defender, 1)
-
-      Then -> assert.equal @defender.hit_points, @original_hp - 1
-
-    describe 'immediate give can handle async operation. wait until I memorize original hp', ->
-
-      context 'with callback', ->
-        Given 'attacker', -> Character("Attacker")
-        Given 'defender', -> Character("Defender")
-        GIVEN original_hp: (done) ->
-          setImmediate =>
-            done(null, @defender.hit_points)
-
-        When -> @attacker.attack(@defender, 1)
-
-        Then -> assert.equal @defender.hit_points, @original_hp - 1
-
-      context 'with function that return a Promise', ->
-        Given 'attacker', -> Character("Attacker")
-        Given 'defender', -> Character("Defender")
-        GIVEN original_hp: -> Promise.resolve(@defender.hit_points)
-
-        When -> @attacker.attack(@defender, 1)
-
-        Then -> assert.equal @defender.hit_points, @original_hp - 1
+  message = null
+  try
+    GIVEN x: 1
+  catch e
+    message = e.message
+  Then -> expect(message).to.match /GIVEN.*no function provided/
