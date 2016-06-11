@@ -2,7 +2,6 @@ var esprima = require('esprima'),
     estraverse = require('estraverse'),
     escodegen = require('escodegen'),
     au = require('../lib/ast-util'),
-    fnToAst = au.fnToAst,
     createEvaluatorAst = au.createEvaluatorAst
 
 module.exports = function(source, filepath) {
