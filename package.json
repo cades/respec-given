@@ -1,7 +1,7 @@
 {
   "name": "respec-given",
   "version": "0.0.1",
-  "description": "porting of rspec/given to JS world, on mocha",
+  "description": "bring rspec-given to JS world, on mocha",
   "author": {
     "name": "cades kao",
     "email": "cadeskao@gmail.com"
@@ -16,13 +16,12 @@
     "lodash": "4.13.1",
     "minimatch": "3.0.0",
     "mocha": "2.4.3",
-    "should": "9.0.0"
   },
   "peerDependencies": {
     "mocha": ">=1.20.1"
   },
   "devDependencies": {
-    "expect.js": "~0.3.1",
+    "expect.js": "0.3.1",
     "mocha": "2.4.3"
   },
   "scripts": {
