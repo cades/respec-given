@@ -3,10 +3,12 @@
 --require index.js
 --require coffee-script/register
 --require ./na-loader
+--require ./na-loader/coffee
 --require ./enable-good-habit-mode
 --compilers coffee:coffee-script/register
 -R spec
 -u respec-given/mocha
 
+test/**/*.js
+test/**/*.coffee
 
-test/**/*.coffee test/**/*.js
