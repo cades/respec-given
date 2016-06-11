@@ -3,9 +3,9 @@ var originalLoader = extensions['.js']
 var fs = require('fs')
 var path = require('path')
 var minimatch = require('minimatch')
-var transformThenStatement = require('./transform-then')
+var transformThenStatement = require('../transform-then')
 
-function transformThen(options) {
+function naturalAssertionJSLoader(options) {
 
   var patternStartsWithSlash = (options.pattern.lastIndexOf('/', 0) === 0)
   var separator = patternStartsWithSlash ? '' : path.sep
@@ -21,4 +21,4 @@ function transformThen(options) {
   }
 }
 
-module.exports = transformThen
+module.exports = naturalAssertionJSLoader

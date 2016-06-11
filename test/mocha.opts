@@ -2,6 +2,8 @@
 --bail
 --require index.js
 --require coffee-script/register
+--require ./na-loader
+--require ./enable-good-habit-mode
 --compilers coffee:coffee-script/register
 -R spec
 -u respec-given/mocha
