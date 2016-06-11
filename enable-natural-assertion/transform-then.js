@@ -60,12 +60,17 @@ module.exports = function(source, filepath) {
       evaluators.push(createEvaluatorAst(node))
     }
     function appendMetaObjectToArgumentList() {
-      var isBinaryExpression = returnedExpression().type === 'BinaryExpression'
-      var tmpl = "({evaluators: [], isBinaryExpression: " + isBinaryExpression +
-            ", left: function(){ return }, right: function(){ return }" +
-            ", filepath: '" + filepath + "'" +
-            ", loc: " + JSON.stringify(returnedExpression().loc) + "})"
-      var metaAst = esprima.parse(tmpl).body[0].expression
+      var isBinaryExpression = returnedExpression().type === 'BinaryExpression',
+          metaTmplObj = {
+            evaluators: [],
+            isBinaryExpression: isBinaryExpression,
+            left: function() { return },
+            rigt: function() { return },
+            filepath: filepath,
+            loc: returnedExpression().loc
+          }
+
+      var metaAst = au.objToAst(metaTmplObj)
       metaAst.properties[0].value.elements = evaluators
       if (isBinaryExpression) {
         metaAst.properties[2].value.body.body[0].argument = returnedExpression().left
