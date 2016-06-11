@@ -1,11 +1,9 @@
 var esprima = require('esprima'),
     estraverse = require('estraverse'),
     escodegen = require('escodegen'),
-    astUtil = require('../lib/ast-util'),
-    fnToAst = astUtil.fnToAst,
-    lastStatementInFn = astUtil.lastStatementInFn,
-    returnedExpressionInFn = astUtil.returnedExpressionInFn,
-    createEvaluatorAst = astUtil.createEvaluatorAst
+    au = require('../lib/ast-util'),
+    fnToAst = au.fnToAst,
+    createEvaluatorAst = au.createEvaluatorAst
 
 module.exports = function(source, filepath) {
   var ast = esprima.parse(source, { loc: true })
@@ -26,15 +24,13 @@ module.exports = function(source, filepath) {
   })
 
   function createMetaObjectAsExtraArgument(fnAst, callAst) {
-    var evaluators = [],
-        lastStatement = lastStatementInFn(fnAst),
-        returnedExpression = returnedExpressionInFn(fnAst)
+    var evaluators = []
 
     if (useAsyncStyle()) return
     if (!bodyContainsOnlyOneStatement()) return
     if (!theStatementIsReturnStatement()) return
 
-    estraverse.traverse(returnedExpression, {
+    estraverse.traverse(returnedExpression(), {
       enter: function(node, parent) {
         if (nodeIsNotAnExpression() &&
             nodeIsNotAnIdentifier()) return
@@ -52,26 +48,28 @@ module.exports = function(source, filepath) {
 
     appendMetaObjectToArgumentList()
 
-    function useAsyncStyle() { return  fnAst.params.lbength > 0 }
+    function useAsyncStyle() { return fnAst.params.lbength > 0 }
     function bodyContainsOnlyOneStatement() { return statements().length === 1 }
     function statements() { return fnAst.body.body }
     function theStatementIsReturnStatement() {
-      return lastStatement.type === 'ReturnStatement'
+      return lastStatement().type === 'ReturnStatement'
     }
+    function lastStatement(){ return au.lastStatementInFn(fnAst) }
+    function returnedExpression() { return au.returnedExpressionInFn(fnAst) }
     function createEvaluatorForExpression(node) {
       evaluators.push(createEvaluatorAst(node))
     }
     function appendMetaObjectToArgumentList() {
-      var isBinaryExpression = returnedExpression.type === 'BinaryExpression'
+      var isBinaryExpression = returnedExpression().type === 'BinaryExpression'
       var tmpl = "({evaluators: [], isBinaryExpression: " + isBinaryExpression +
             ", left: function(){ return }, right: function(){ return }" +
             ", filepath: '" + filepath + "'" +
-            ", loc: " + JSON.stringify(returnedExpression.loc) + "})"
+            ", loc: " + JSON.stringify(returnedExpression().loc) + "})"
       var metaAst = esprima.parse(tmpl).body[0].expression
       metaAst.properties[0].value.elements = evaluators
       if (isBinaryExpression) {
-        metaAst.properties[2].value.body.body[0].argument = returnedExpression.left
-        metaAst.properties[3].value.body.body[0].argument = returnedExpression.right
+        metaAst.properties[2].value.body.body[0].argument = returnedExpression().left
+        metaAst.properties[3].value.body.body[0].argument = returnedExpression().right
       }
       callAst.arguments.push(metaAst)
     }
