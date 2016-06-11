@@ -8,7 +8,5 @@ describe "Then(fn)", ->
   context 'with assertion library', ->
     Then -> expect(1).to.be(1)
 
-describe 'todos', ->
-  Then.skip 'natural assertion return false should fail'
-  Then.skip 'non-natural assertion report'
-
+  context 'support promise', ->
+    Then -> Promise.resolve(1)
