@@ -1,18 +1,23 @@
 var esprima = require('esprima'),
     estraverse = require('estraverse'),
     escodegen = require('escodegen'),
-    createGetterAst = require('./create-getter-ast')
+    astUtil = require('../lib/ast-util'),
+    fnToAst = astUtil.fnToAst,
+    lastStatementInFn = astUtil.lastStatementInFn,
+    returnedExpressionInFn = astUtil.returnedExpressionInFn,
+    createEvaluatorAst = astUtil.createEvaluatorAst
 
 module.exports = function(source, filepath) {
-  var ast = esprima.parse(source)
+  var ast = esprima.parse(source, { loc: true })
   estraverse.traverse(ast, {
     enter: function(node, parent) {
       var fnAst
       if (node.type !== 'CallExpression') return
-      if (node.callee.name !== 'Then') return
+      if (!(node.callee.name &&
+            node.callee.name.match(/Then|Invariant|And/))) return
       if (!(fnAst = node.arguments.find(isFunctionExpression))) return
 
-      createGetterAsExtraArgument(fnAst, node)
+      createMetaObjectAsExtraArgument(fnAst, node)
 
       function isFunctionExpression(node) {
         return node.type.match(/(Arrow)?FunctionExpression/)
@@ -20,45 +25,55 @@ module.exports = function(source, filepath) {
     }
   })
 
-  function createGetterAsExtraArgument(fnAst, callAst) {
-    var getters = []
+  function createMetaObjectAsExtraArgument(fnAst, callAst) {
+    var evaluators = [],
+        lastStatement = lastStatementInFn(fnAst),
+        returnedExpression = returnedExpressionInFn(fnAst)
 
-    if (useAsyncStyle()) return // this should be forbidden
+    if (useAsyncStyle()) return
     if (!bodyContainsOnlyOneStatement()) return
     if (!theStatementIsReturnStatement()) return
 
-    estraverse.traverse(returnedExpression(), {
+    estraverse.traverse(returnedExpression, {
       enter: function(node, parent) {
-        if (nodeIsNotAnIdentifier()) return
+        if (nodeIsNotAnExpression() &&
+            nodeIsNotAnIdentifier()) return
         if (nodeIsPropertyOfOtherIdentifier()) return
 
-        createGetterForLexicalVariable(node.name)
+        createEvaluatorForExpression(node)
 
+        function nodeIsNotAnExpression() { return !node.type.match(/Expression$/) }
         function nodeIsNotAnIdentifier() { return node.type !== 'Identifier' }
         function nodeIsPropertyOfOtherIdentifier() {
-          return parent.type === 'MemberExpression' && node === parent.property
+          return parent && parent.type === 'MemberExpression' && node === parent.property
         }
       }
     })
 
-    appendGettersToArgumentList()
+    appendMetaObjectToArgumentList()
 
-    function useAsyncStyle() { return  fnAst.params.length > 0 }
+    function useAsyncStyle() { return  fnAst.params.lbength > 0 }
     function bodyContainsOnlyOneStatement() { return statements().length === 1 }
     function statements() { return fnAst.body.body }
     function theStatementIsReturnStatement() {
-      return firstStatement().type === 'ReturnStatement'
+      return lastStatement.type === 'ReturnStatement'
     }
-    function returnedExpression() { return firstStatement().argument }
-    function firstStatement() { return statements()[0] }
-    function createGetterForLexicalVariable(varname) {
-      getters.push(createGetterAst(varname))
+    function createEvaluatorForExpression(node) {
+      evaluators.push(createEvaluatorAst(node))
     }
-    function appendGettersToArgumentList() {
-      callAst.arguments.push({
-        "type": "ObjectExpression",
-        "properties": getters
-      })
+    function appendMetaObjectToArgumentList() {
+      var isBinaryExpression = returnedExpression.type === 'BinaryExpression'
+      var tmpl = "({evaluators: [], isBinaryExpression: " + isBinaryExpression +
+            ", left: function(){ return }, right: function(){ return }" +
+            ", filepath: '" + filepath + "'" +
+            ", loc: " + JSON.stringify(returnedExpression.loc) + "})"
+      var metaAst = esprima.parse(tmpl).body[0].expression
+      metaAst.properties[0].value.elements = evaluators
+      if (isBinaryExpression) {
+        metaAst.properties[2].value.body.body[0].argument = returnedExpression.left
+        metaAst.properties[3].value.body.body[0].argument = returnedExpression.right
+      }
+      callAst.arguments.push(metaAst)
     }
   }
 

@@ -1,34 +1,17 @@
-invariant
-  - invariant fail 的訊息更易懂 (告知錯誤發生在 Invariant, 而非 Then. And 同理.)
-
-natrual assertion
-
-
-Then 應該支援 async style 嗎? natural assertion 不支援 async. 我覺得應該不鼓勵在 Then 使用 async, 有需要的話應該用 When
-或許強制規定這件事會更好? (意圖鮮明. 這個工具本來就有鮮明的立場, 不是嗎? 這也吻合 rspec-given 的原始精神)
-
-只要 require loader, 就 enable natural assertion.
-但不一定會做 transform (也因此不一定會 enable detail report). 視個別 Then 的情況而定.
-不過就算沒有 enable detail report, return false 依然會報錯. 只是沒提供易懂訊息.
-這樣太亂了, 不管有沒有 enable natural assertion, 都要抓 last statement 當做報告.
-所以這不該做在loader, 而是要做在 core 裡面才對!
-
-重點：natural assertion 一旦 enable, 就一定會看 return value. 這是不能默默忽略的, 否則會造成 false positive
-
-
-enable natural assertion detail report 的條件, 加上一條: Then(fn), fn 只能包含一個 ReturnStatement.
-因為如果含有 assignment, 找到正確的值會變得很麻煩, 而 declaration 也能用來做 assignment, 所以同樣不允許.
-如有需要 assign 的情況, 請愛用 Let()
-
-
-package.json 裡面寫 enableAsyncThen: true 才允許 async then
-
-
 支援 generator, ES7 async function, Observable (ava 支援的那些)
+
+coffee script loader
+
+豐富 good-habit-mode 的檢查
 
 
 -------------- done -----------------
 
+
+natrual assertion
+  - error location
+  - 類似 power-assert 的 expression 解析
+  - 作法: 把要求值的 expression function list 在 loader transform 時就產生好
 
 整理 code, 減少重複
 
@@ -65,3 +48,25 @@ Given 'x', 1 允許數字、字串、布林、null、undefined、NaN 這些...?
 唯一不變的只有 primitive type 不會變, 那你直接用就好(直接寫 null, 直接寫 123), 何須 Given?
 
   - 支援 return false 就 fail
+
+
+Then 應該支援 async style 嗎? natural assertion 不支援 async. 我覺得應該不鼓勵在 Then 使用 async, 有需要的話應該用 When
+或許強制規定這件事會更好? (意圖鮮明. 這個工具本來就有鮮明的立場, 不是嗎? 這也吻合 rspec-given 的原始精神)
+
+只要 require loader, 就 enable natural assertion.
+但不一定會做 transform (也因此不一定會 enable detail report). 視個別 Then 的情況而定.
+不過就算沒有 enable detail report, return false 依然會報錯. 只是沒提供易懂訊息.
+這樣太亂了, 不管有沒有 enable natural assertion, 都要抓 last statement 當做報告.
+所以這不該做在loader, 而是要做在 core 裡面才對!
+
+重點：natural assertion 一旦 enable, 就一定會看 return value. 這是不能默默忽略的, 否則會造成 false positive
+
+
+enable natural assertion detail report 的條件, 加上一條: Then(fn), fn 只能包含一個 ReturnStatement.
+因為如果含有 assignment, 找到正確的值會變得很麻煩, 而 declaration 也能用來做 assignment, 所以同樣不允許.
+如有需要 assign 的情況, 請愛用 Let()
+
+
+解法: require enable-good-habit-mode
+
+- invariant fail 的訊息更易懂 (告知錯誤發生在 Invariant, 而非 Then. And 同理.)
