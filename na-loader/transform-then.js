@@ -64,7 +64,7 @@ module.exports = function(source, filepath) {
             evaluators: [],
             isBinaryExpression: isBinaryExpression,
             left: function() { return },
-            rigt: function() { return },
+            right: function() { return },
             filepath: filepath,
             loc: returnedExpression().loc
           }
