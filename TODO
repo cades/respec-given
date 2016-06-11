@@ -1,6 +1,5 @@
 支援 generator, ES7 async function, Observable (ava 支援的那些)
 
-coffee script loader
 
 豐富 good-habit-mode 的檢查
 
@@ -70,3 +69,5 @@ enable natural assertion detail report 的條件, 加上一條: Then(fn), fn 只
 解法: require enable-good-habit-mode
 
 - invariant fail 的訊息更易懂 (告知錯誤發生在 Invariant, 而非 Then. And 同理.)
+
+coffee script loader
