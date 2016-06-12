@@ -45,7 +45,4 @@ describe 'Stack', ->
 
       Then -> @pop_result == 'top_item'
       Then -> @stack.top() == 'second_item'
-      Then ->
-        undefined == 2
-        #undefined == 1
-        #@stack.depth() == @original_depth - 1
+      Then -> @stack.depth() == @original_depth - 1
