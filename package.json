@@ -8,7 +8,6 @@
   },
   "main": "./index.js",
   "dependencies": {
-    "async": "1.5.2",
     "coffee-script": "1.10.0",
     "convert-source-map": "1.2.0",
     "escodegen": "1.8.0",
