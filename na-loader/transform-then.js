@@ -33,12 +33,14 @@ module.exports = function(source, filepath) {
       enter: function(node, parent) {
         if (nodeIsNotAnExpression() &&
             nodeIsNotAnIdentifier()) return
+        if (nodeIsPrimitive()) return
         if (nodeIsPropertyOfOtherIdentifier()) return
 
         createEvaluatorForExpression(node)
 
         function nodeIsNotAnExpression() { return !node.type.match(/Expression$/) }
         function nodeIsNotAnIdentifier() { return node.type !== 'Identifier' }
+        function nodeIsPrimitive() { return node.name && node.name.match(/undefined|NaN|Infinity/) }
         function nodeIsPropertyOfOtherIdentifier() {
           return parent && parent.type === 'MemberExpression' && node === parent.property
         }
