@@ -26,7 +26,8 @@ see more about [natural assertion loaders](#transform-test-code)
 
 ## Demo
 
-<script type="text/javascript" src="https://asciinema.org/a/48677.js" id="asciicast-48677" async></script>
+[![asciicast](https://asciinema.org/a/48677.png)](https://asciinema.org/a/48677)
+
 
 ## Example
 
