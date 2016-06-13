@@ -7,7 +7,7 @@
 --require ./enable-good-habit-mode
 --compilers coffee:coffee-script/register
 -R spec
--u respec-given/mocha
+-u respec-given
 
 test/**/*.js
 test/**/*.coffee
