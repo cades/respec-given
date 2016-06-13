@@ -37,8 +37,8 @@ module.exports = Mocha.interfaces['respec-given'] = function(suite) {
     context.Given = core.Given
     context.Let = core.Let
     context.When = core.When
-    context.GIVEN = core.GIVEN
-    context.LET = core.LET
+    context.GivenI = core.GivenI
+    context.LetI = core.LetI
     context.Then = core.Then
     context.Invariant = core.Invariant
     context.And = core.And

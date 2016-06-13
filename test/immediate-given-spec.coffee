@@ -1,4 +1,4 @@
-describe "GIVEN(var, fn)", ->
+describe "GivenI(var, fn)", ->
 
   context 'example: Character can be damaged', ->
     Character = (name) ->
@@ -8,7 +8,7 @@ describe "GIVEN(var, fn)", ->
     describe 'sync function', ->
       Given 'attacker', -> Character("Attacker")
       Given 'defender', -> Character("Defender")
-      GIVEN 'original_hp', -> @defender.hit_points
+      GivenI 'original_hp', -> @defender.hit_points
 
       When -> @attacker.attack(@defender, 1)
 
@@ -17,7 +17,7 @@ describe "GIVEN(var, fn)", ->
     describe 'sync function that return a promise', ->
       Given 'attacker', -> Character("Attacker")
       Given 'defender', -> Character("Defender")
-      GIVEN 'original_hp', -> Promise.resolve(@defender.hit_points)
+      GivenI 'original_hp', -> Promise.resolve(@defender.hit_points)
 
       When -> @attacker.attack(@defender, 1)
 
@@ -27,7 +27,7 @@ describe "GIVEN(var, fn)", ->
       context 'with callback', ->
         Given 'attacker', -> Character("Attacker")
         Given 'defender', -> Character("Defender")
-        GIVEN 'original_hp', (done) ->
+        GivenI 'original_hp', (done) ->
           setImmediate =>
             done(null, @defender.hit_points)
 
@@ -35,17 +35,17 @@ describe "GIVEN(var, fn)", ->
 
         Then -> @defender.hit_points == @original_hp - 1
 
-describe "GIVEN(hash)", ->
+describe "GivenI(hash)", ->
 
   describe 'support function', ->
-    GIVEN result: -> 'cool'
+    GivenI result: -> 'cool'
     Then -> @result == 'cool'
 
-describe 'GIVEN(varname, value) is forbidden', ->
+describe 'GivenI(varname, value) is forbidden', ->
 
   message = null
   try
-    GIVEN x: 1
+    GivenI x: 1
   catch e
     message = e.message
-  Then -> null != message.match /GIVEN.*no function provided/
+  Then -> null != message.match /GivenI.*no function provided/

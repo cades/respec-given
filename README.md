@@ -26,7 +26,7 @@ see more about [natural assertion loaders](#transform-test-code)
 
 ## Demo
 
-[![asciicast](https://asciinema.org/a/48677.png)](https://asciinema.org/a/48677)
+[![asciicast](https://asciinema.org/a/48708.png)](https://asciinema.org/a/48708)
 
 
 ## Example
@@ -67,7 +67,7 @@ describe 'Stack', ->
 
   context "with several items", ->
     Given initial_contents: -> ['second_item', 'top_item']
-    GIVEN original_depth: -> @stack.depth()
+    GivenI original_depth: -> @stack.depth()
 
     context "when pushing", ->
       When -> @stack.push('new_item')
@@ -128,7 +128,7 @@ you can use object notation as a shorthand;
 
 
 ```js
-    GIVEN('stack', function() { return stack_with([]) })
+    GivenI('stack', function() { return stack_with([]) })
 ```
 
   Using this form, `fn` will be evaluated **immediately** and the return value is assigned to `this.stack`.
@@ -140,7 +140,7 @@ rspec has [`let`](http://www.relishapp.com/rspec/rspec-core/v/3-4/docs/helper-me
 Since ES6 introduce `let` keyword, to avoid collision, respec-given choose capitalized `Let`.
 
 - `Let` is an alias to `Given`, which maps to rspec-given's `let/Given`
-- `LET` is an alias to `GIVEN`, which maps to rspec-given's `let!/Given!`
+- `LetI` is an alias to `GivenI`, which maps to rspec-given's `let!/Given!`
 
 
 ### When

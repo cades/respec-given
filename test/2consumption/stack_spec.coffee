@@ -32,7 +32,7 @@ describe 'Stack', ->
 
   context "with several items", ->
     Given initial_contents: -> ['second_item', 'top_item']
-    GIVEN original_depth: -> @stack.depth()
+    GivenI original_depth: -> @stack.depth()
 
     context "when pushing", ->
       When -> @stack.push('new_item')
