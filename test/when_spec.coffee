@@ -1,6 +1,6 @@
 describe 'When(fn)', ->
 
-  describe 'when is no lazy', ->
+  describe 'when is not lazy', ->
     x = 0
     When -> x++
     Then -> x == 1
