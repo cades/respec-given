@@ -2,6 +2,7 @@ var esprima = require('esprima'),
     estraverse = require('estraverse'),
     escodegen = require('escodegen'),
     au = require('../lib/ast-util'),
+    makeEvaluatorFunction = au.makeEvaluatorFunction,
     createEvaluatorAst = au.createEvaluatorAst
 
 module.exports = function(source, filepath) {
@@ -65,8 +66,8 @@ module.exports = function(source, filepath) {
           metaTmplObj = {
             evaluators: [],
             isBinaryExpression: isBinaryExpression,
-            left: function() { return },
-            right: function() { return },
+            left: null,
+            right: null,
             filepath: filepath,
             loc: returnedExpression().loc
           }
@@ -74,8 +75,8 @@ module.exports = function(source, filepath) {
       var metaAst = au.objToAst(metaTmplObj)
       metaAst.properties[0].value.elements = evaluators
       if (isBinaryExpression) {
-        metaAst.properties[2].value.body.body[0].argument = returnedExpression().left
-        metaAst.properties[3].value.body.body[0].argument = returnedExpression().right
+        metaAst.properties[2].value = makeEvaluatorFunction(returnedExpression().left)
+        metaAst.properties[3].value = makeEvaluatorFunction(returnedExpression().right)
       }
       callAst.arguments.push(metaAst)
     }
