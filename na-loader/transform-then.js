@@ -49,7 +49,7 @@ module.exports = function(source, filepath) {
 
     appendMetaObjectToArgumentList()
 
-    function useAsyncStyle() { return fnAst.params.lbength > 0 }
+    function useAsyncStyle() { return fnAst.params.length > 0 }
     function bodyContainsOnlyOneStatement() { return statements().length === 1 }
     function statements() { return fnAst.body.body }
     function theStatementIsReturnStatement() {
