@@ -1,6 +1,6 @@
 # respec-given
 
-respec-given is a extension to mocha testing framework. It encourages cleaner, readable, and maintainable specs tests using `Given`, `When`, and `Then`. It is a shameless tribute to Ludwig Magnusson's [mocha-gwt](https://github.com/TheLudd/mocha-gwt), Robert Fleischmann's [mocha-given](https://github.com/rendro/mocha-given), Justin Searl's [jasmine-given](https://github.com/searls/jasmine-given), James Sadler's [given.js](https://github.com/freshtonic/given.js), Sergii Stotskyi's [bdd-lazy-var](https://github.com/stalniy/bdd-lazy-var), and the origination of all: Jim Weirich's [rspec-given](https://github.com/jimweirich/rspec-given) gem.
+respec-given is an extension to the mocha testing framework. It encourages cleaner, readable, and maintainable specs/tests using `Given`, `When`, and `Then`. It is a shameless tribute to Ludwig Magnusson's [mocha-gwt](https://github.com/TheLudd/mocha-gwt), Robert Fleischmann's [mocha-given](https://github.com/rendro/mocha-given), Justin Searl's [jasmine-given](https://github.com/searls/jasmine-given), James Sadler's [given.js](https://github.com/freshtonic/given.js), Sergii Stotskyi's [bdd-lazy-var](https://github.com/stalniy/bdd-lazy-var), and the origination of all: Jim Weirich's [rspec-given](https://github.com/jimweirich/rspec-given) gem.
 
 If you never heard anyone of projects mentioned above, I highly recommend you watching [How to Stop Hating your Test Suite](https://youtu.be/VD51AkG8EZw?t=8m42s) by Justin Searls, which inspired me to start this project.
 
@@ -83,7 +83,7 @@ describe 'Stack', ->
       Then -> @stack.depth() == @original_depth - 1
 ```
 
-Before we take a closer look at each statement used in respec-given, I hope you read rspec-given's [documentation](https://github.com/jimweirich/rspec-given#given) first. It explained **the idea behind it's design** excellently.
+Before we take a closer look at each statement used in respec-given, I hope you can read rspec-given's [documentation](https://github.com/jimweirich/rspec-given#given) first. It explained **the idea behind its design** excellently.
 
 Instead of repeat Jim's words, I'll simply introduce API here.
 
@@ -98,7 +98,9 @@ Instead of repeat Jim's words, I'll simply introduce API here.
     Given('stack', function() { return stack_with([]) })
 ```
 
-`this.stack` become accessible in other clauses using. that function will be evaluated until first access to `this.stack`. Once the function is evaluated, the result is cached.
+`this.stack` become accessible in other clauses.
+
+The function will be evaluated until first access to `this.stack`. Once the function is evaluated, the result is cached.
 
 If you have multiple `Given`s, like
 
@@ -107,7 +109,7 @@ If you have multiple `Given`s, like
     Given('stack2', function() { return stack_with([3, 4]) })
 ```
 
-you can use object notation as a shorthand;
+you can use object notation as a shorthand:
 
 ```js
     Given({
@@ -131,13 +133,13 @@ you can use object notation as a shorthand;
     GivenI('stack', function() { return stack_with([]) })
 ```
 
-  Using this form, `fn` will be evaluated **immediately** and the return value is assigned to `this.stack`.
+  Using this form, the function will be evaluated **immediately** and the return value is assigned to `this.stack`.
 
 #### Let statement
 
 rspec has [`let`](http://www.relishapp.com/rspec/rspec-core/v/3-4/docs/helper-methods/let-and-let) helper, which is a lazy variable declaration. In rspec, `Given` is simply alias to `let`. (Jim mentioned a [reason](https://github.com/jimweirich/rspec-given/wiki/Using-let-and-given-together) why we need `let` if we have `Given` already.)
 
-Since ES6 introduce `let` keyword, to avoid collision, respec-given choose capitalized `Let`.
+Since ES6 introduce `let` keyword, to avoid name collision, respec-given choose capitalized `Let`.
 
 - `Let` is an alias to `Given`, which maps to rspec-given's `let/Given`
 - `LetI` is an alias to `GivenI`, which maps to rspec-given's `let!/Given!`
@@ -145,7 +147,7 @@ Since ES6 introduce `let` keyword, to avoid collision, respec-given choose capit
 
 ### When
 
-`When` is used to perform action and capture result (or Error). All asynchronous operation should be perform here.
+`When` is used to perform action and capture result (or Error). All asynchronous operation should be performed here.
 
 ```js
     When(function() { stack.pop() })
@@ -167,7 +169,7 @@ Since ES6 introduce `let` keyword, to avoid collision, respec-given choose capit
     })
 ```
 
-  Using this form, you can perform asynchronous operation while finished you should call `done()` is success, or `done(err)` if operation failed.
+  Using this form, you can perform an asynchronous operation. When finished, you should call `done()` is success, or `done(err)` if the operation failed.
 
 - `When(result, fn)`
 
@@ -202,7 +204,7 @@ Since ES6 introduce `let` keyword, to avoid collision, respec-given choose capit
     })
 ```
 
-  Using this form, you can perform asynchronous operation here, while finished you should call `done(res)`, or `done(null, res)` if you prefer Node.js convention. Call `done(err)` if operation failed. Whatever value you fill into callback, it will be assigned to `this.result`.
+  Using this form, you can perform asynchronous operation here, while finished you should call `done(res)`, or `done(null, res)` if you prefer Node.js convention. Call `done(err)` if the operation failed. Whatever value you fill into the callback, it will be assigned to `this.result`.
   
   If the function throws an error **synchronously**, the error will be caught and assigned to `this.result`.
 
@@ -213,7 +215,7 @@ If you have multiple `When`s, like
     When('result2', function() { return stack2.pop() })
 ```
 
-you can use object notation as a shorthand;
+you can use object notation as a shorthand:
 
 ```js
     When({
@@ -224,7 +226,7 @@ you can use object notation as a shorthand;
 
 ### Then
 
-A *Then* clause forms a mocha test case of a test suite, it is like `it` in classical BDD style mocha test. But *Then* should only contain a assertion expression, and should not have any side effects.
+A *Then* clause forms a mocha test case of a test suite, it is like `it` in classical BDD style mocha test. But *Then* should only contain an assertion expression, and should not have any side effects.
 
 Let me quote [Jim's words](https://github.com/jimweirich/rspec-given#then) here:
 
@@ -236,13 +238,13 @@ OK, let's see some example!
     Then(function() { expect(this.result).to.be(1) })
 ```
 
-This form use a 3rd-party assertion/matcher library, for example chai.js.
+This form uses a 3rd-party assertion/matcher library, for example, chai.js.
 
 ```js
     Then(function() { return this.result === 1 })
 ```
 
-This form returns a boolean expression, this is called [*natural assertion*](#natural-assertion). if the function returns a Boolean false, this test is considered fail. Otherwise it passes.
+This form returns a boolean expression, this is called [*natural assertion*](#natural-assertion). if the function returns a **boolean false**, this test is considered fail.
 
 ```js
     Then(function(done) {
@@ -256,7 +258,7 @@ This form returns a boolean expression, this is called [*natural assertion*](#na
 
 1. it makes report hard to read
 2. natural assertion can not handle this case
-3. asynchronous operation should be done in *When* clause
+3. all asynchronous operation should be done in *When* clause
 
 
 ### And
@@ -276,13 +278,13 @@ please refer to [rspec-given's documentation](https://github.com/jimweirich/rspe
 
 ## <a name="natural-assertion"></a> Natural Assertions
 
-respec-given supports "natural assertions" in *Then*, *And*, and *Invariant* blocks. Natural assertion are just boolean expressions, without additional assertion library.
+respec-given supports "natural assertions" in *Then*, *And*, and *Invariant* blocks. Natural assertions are just boolean expressions, without additional assertion library.
 
 ### Failure Messages with Natural Assertions
 
 There are 2 kind of failure message, depends on whether test code is transformed.
 
-If test code is not transformed, simple failure message applies. Otherwise comprehansive failure message applies. The former simply points out which expression failed, the later show each sub-expression's value, which is easier for developers to debug.
+If the test code is not transformed, simple failure message applies. Otherwise, comprehensive failure message applies. The former simply points out which expression failed, the later show each subexpression's value, which is easier for developers to debug.
 
 #### Simple Failure Message
 
@@ -296,7 +298,7 @@ example:
 
 ```
 
-#### Comprehansive Failure Message
+#### Comprehensive Failure Message
 
 example:
 
@@ -325,9 +327,9 @@ example:
 
 ### <a name="transform-test-code"></a> Transform test code
 
-Technique used here is inspired by [power-assert](https://github.com/power-assert-js/power-assert).
+The technique used here is inspired by [power-assert](https://github.com/power-assert-js/power-assert).
 
-there are 2 Node.js loader out of box:
+there are 2 Node.js loader out of the box:
 
 - JavaScript loader
 
