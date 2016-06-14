@@ -95,6 +95,7 @@ Instead of repeat Jim's words, I'll simply introduce API here.
 #### Lazy Given
 
 ```js
+    // Given("varname", fn)
     Given('stack', function() { return stack_with([]) })
 ```
 
@@ -112,6 +113,7 @@ If you have multiple `Given`s, like
 you can use object notation as a shorthand:
 
 ```js
+    // Given({hash})
     Given({
       stack1: function() { return stack_with([1, 2]) },
       stack2: function() { return stack_with([3, 4]) }
@@ -122,6 +124,7 @@ you can use object notation as a shorthand:
 
 
 ```js
+    // Given(fn)
     var stack
     Given(function() { stack = stack_with([]) })
 ```
@@ -130,6 +133,7 @@ you can use object notation as a shorthand:
 
 
 ```js
+    // GivenI("varname", fn)
     GivenI('stack', function() { return stack_with([]) })
 ```
 
@@ -150,6 +154,7 @@ Since ES6 introduce `let` keyword, to avoid name collision, respec-given choose 
 `When` is used to perform action and capture result (or Error). All asynchronous operation should be performed here.
 
 ```js
+    // When(fn)
     When(function() { stack.pop() })
 ```
 
@@ -162,6 +167,7 @@ Since ES6 introduce `let` keyword, to avoid name collision, respec-given choose 
   If the function returns a Promise, next statement will be executed until the promise is resolved.
 
 ```js
+    // When(fn(done))
     When(function(done) {
       asyncOp(function(err, res) {
         done(err, res)
@@ -171,9 +177,8 @@ Since ES6 introduce `let` keyword, to avoid name collision, respec-given choose 
 
   Using this form, you can perform an asynchronous operation. When finished, you should call `done()` is success, or `done(err)` if the operation failed.
 
-- `When(result, fn)`
-
 ```js
+    // When("result", fn)
     When('pop_result', function() { return this.stack.pop() })
     Then(function() { this.pop_result === 'top_item' })
 ```
@@ -197,6 +202,7 @@ Since ES6 introduce `let` keyword, to avoid name collision, respec-given choose 
   If the function throws an error synchronously, the error will be caught and assigned to `this.result`.
 
 ```js
+    // When("result", fn(done))
     When('result', function(done) {
       asyncOp(function(err, res) {
         done(err, res)
@@ -218,6 +224,7 @@ If you have multiple `When`s, like
 you can use object notation as a shorthand:
 
 ```js
+    // When({hash})
     When({
       result1: function() { return stack1.pop() }),
       result2: function() { return stack2.pop() })
@@ -235,6 +242,7 @@ Let me quote [Jim's words](https://github.com/jimweirich/rspec-given#then) here:
 OK, let's see some example!
 
 ```js
+    // Then(fn)
     Then(function() { expect(this.result).to.be(1) })
 ```
 
