@@ -50,9 +50,8 @@ module.exports = function(source, filepath) {
 
     appendMetaObjectToArgumentList()
 
-    function useAsyncStyle() { return fnAst.params.length > 0 }
-    function bodyContainsOnlyOneStatement() { return statements().length === 1 }
-    function statements() { return fnAst.body.body }
+    function useAsyncStyle() { return au.useAsyncStyle(fnAst) }
+    function bodyContainsOnlyOneStatement() { return au.bodyContainsOnlyOneStatement(fnAst) }
     function theStatementIsReturnStatement() {
       return lastStatement().type === 'ReturnStatement'
     }
