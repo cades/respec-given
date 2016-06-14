@@ -7,9 +7,17 @@ describe("requirement for JS testing", function() {
   })
 
   context('with ES6 arrow function', function() {
-    Then(() => {
-      return 1 === 1
+
+    context('explicitly return', function(){
+      Then(() => {
+        return 1 === 1
+      })
     })
+
+    context('implicitly return', function() {
+      Then(() => 1 === 1)
+    })
+
   })
 
 })

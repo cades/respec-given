@@ -27,8 +27,10 @@ module.exports = function(source, filepath) {
     var evaluators = []
 
     if (useAsyncStyle()) return
-    if (!bodyContainsOnlyOneStatement()) return
-    if (!theStatementIsReturnStatement()) return
+    if (!isArrowFunctionThatImplicitlyReturns()) {
+      if (!bodyContainsOnlyOneStatement()) return
+      if (!theStatementIsReturnStatement()) return
+    }
 
     estraverse.traverse(returnedExpression(), {
       enter: function(node, parent) {
@@ -51,6 +53,7 @@ module.exports = function(source, filepath) {
     appendMetaObjectToArgumentList()
 
     function useAsyncStyle() { return au.useAsyncStyle(fnAst) }
+    function isArrowFunctionThatImplicitlyReturns() { return au.isArrowFunctionThatImplicitlyReturns(fnAst) }
     function bodyContainsOnlyOneStatement() { return au.bodyContainsOnlyOneStatement(fnAst) }
     function theStatementIsReturnStatement() {
       return lastStatement().type === 'ReturnStatement'
