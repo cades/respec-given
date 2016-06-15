@@ -38,6 +38,7 @@ module.exports = function(source, filepath) {
             nodeIsNotAnIdentifier()) return
         if (nodeIsPrimitive()) return
         if (nodeIsPropertyOfOtherIdentifier()) return
+        if (nodeIsThisExpression()) return
 
         createEvaluatorForExpression(node)
 
@@ -47,6 +48,7 @@ module.exports = function(source, filepath) {
         function nodeIsPropertyOfOtherIdentifier() {
           return parent && parent.type === 'MemberExpression' && node === parent.property
         }
+        function nodeIsThisExpression() { return node.type === 'ThisExpression' }
       }
     })
 

@@ -317,20 +317,16 @@ example:
          Failing expression: Invariant { this.stack.empty() === (this.stack.depth() === 0) }
          expected: false
          to equal: true
-           false    <- this.stack.empty() === (this.stack.depth() === 0)
-           false    <- this.stack.empty()
-           function () {      return this._arr.length === 1;    }
-                    <- this.stack.empty
-           { _arr:[  ] }
-                    <- this.stack
-           {}       <- this
-           true     <- this.stack.depth() === 0
-           0        <- this.stack.depth()
-           function () {      return this._arr.length;    }
-                    <- this.stack.depth
-           { _arr:[  ] }
-                    <- this.stack
-           {}       <- this
+           false       <- this.stack.empty() === (this.stack.depth() === 0)
+           false       <- this.stack.empty()
+           #function#  <- this.stack.empty
+           Object{_arr:[]}
+                       <- this.stack
+           true        <- this.stack.depth() === 0
+           0           <- this.stack.depth()
+           #function#  <- this.stack.depth
+           Object{_arr:[]}
+                       <- this.stack
 ```
 
 ### <a name="transform-test-code"></a> Transform test code
