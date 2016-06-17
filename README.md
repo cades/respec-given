@@ -313,20 +313,19 @@ example:
 ```
   Error: Then { this.stack.depth() === 0 }
 
-         Invariant expression failed at test/stack_spec.coffee:23:13
-         Failing expression: Invariant { this.stack.empty() === (this.stack.depth() === 0) }
+  Invariant expression failed at test/stack_spec.coffee:23:13
+
+         Invariant { this.stack.empty() === (this.stack.depth() === 0) }
+                          |     |    |  |         |     |    |  |
+                          |     |    |  |         |     |    0  true
+                          |     |    |  |         |     #function#
+                          |     |    |  false     Object{_arr:[]}
+                          |     |    false
+                          |     #function#
+                          Object{_arr:[]}
+
          expected: false
          to equal: true
-           false       <- this.stack.empty() === (this.stack.depth() === 0)
-           false       <- this.stack.empty()
-           #function#  <- this.stack.empty
-           Object{_arr:[]}
-                       <- this.stack
-           true        <- this.stack.depth() === 0
-           0           <- this.stack.depth()
-           #function#  <- this.stack.depth
-           Object{_arr:[]}
-                       <- this.stack
 ```
 
 ### <a name="transform-test-code"></a> Transform test code
