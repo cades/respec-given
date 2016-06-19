@@ -6,6 +6,10 @@ var Mocha = require('mocha'),
 module.exports = Mocha.interfaces['respec-given'] = function(suite) {
   suite.on('pre-require', function(context, file, mocha) {
 
+    // workaround for https://github.com/mochajs/mocha/issues/2297
+    // this occurs in mocha@2.4.5 or above
+    suite.isPending = function() { return false }
+
     var core = factory.createCore({
       firstSuite: suite,
       addSuiteCallback: function(currentSuite, title) {
