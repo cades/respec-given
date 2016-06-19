@@ -1,7 +1,14 @@
+when fail 的時候, 錯誤訊息讓人以為是 then
+
+rspec-given 的 Failure, 用來驗證 Error
+
 支援 generator, ES7 async function, Observable (ava 支援的那些)
 
+把 rspec-given 的 test case porting 過來
+整理 code
 
 豐富 good-habit-mode 的檢查
+- Then 不許使用 label
 
 
 -------------- done -----------------
@@ -71,3 +78,7 @@ enable natural assertion detail report 的條件, 加上一條: Then(fn), fn 只
 - invariant fail 的訊息更易懂 (告知錯誤發生在 Invariant, 而非 Then. And 同理.)
 
 coffee script loader
+
+then 如果有 undefined reference, 會變成 timeout
+
+mocha@2.4.5 以上的 workaround
