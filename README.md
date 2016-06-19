@@ -26,7 +26,7 @@ see more about [natural assertion loaders](#transform-test-code)
 
 ## Demo
 
-[![asciicast](https://asciinema.org/a/48708.png)](https://asciinema.org/a/48708)
+[![asciicast](https://asciinema.org/a/49432.png)](https://asciinema.org/a/49432)
 
 
 ## Example
