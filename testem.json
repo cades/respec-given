@@ -4,7 +4,7 @@
   "launch_in_ci": ["Node"],
   "launchers": {
     "Node": {
-      "command": "mocha -R respec-given/mocha/tap-reporter",
+      "command": "npm test -- -R respec-given/mocha/tap-reporter",
       "protocol": "tap"
     }
   },
