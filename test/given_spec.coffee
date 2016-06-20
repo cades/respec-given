@@ -62,6 +62,17 @@ describe 'Given(varname, fn)', ->
     Given 'x', -> 2
     Then -> @x == 2
 
+  context 'when varname is assigned to another variable before first access', ->
+    getterIsEvaluated = false
+    Given 'x', -> getterIsEvaluated = true
+
+    # assign before access
+    When -> @x = 'changed'
+    When -> @x
+
+    Then -> getterIsEvaluated == false
+    And -> @x == 'changed'
+
   describe 'if return nothing, var is still set', ->
     Given 'x', -> return
     Then -> @x == undefined
