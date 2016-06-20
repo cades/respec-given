@@ -1,10 +1,18 @@
 {
   "framework": "mocha",
-  "launch_in_dev": ["Node"],
-  "launch_in_ci": ["Node"],
+  "launch_in_dev": ["SAFE", "Consumption", "misc"],
+  "launch_in_ci": ["SAFE", "Consumption", "misc"],
   "launchers": {
-    "Node": {
-      "command": "npm test -- -R respec-given/mocha/tap-reporter",
+    "SAFE": {
+      "command": "npm test -- --opts test/1SAFE/mocha.opts",
+      "protocol": "tap"
+    },
+    "Consumption": {
+      "command": "npm test -- --opts test/2consumption/mocha.opts",
+      "protocol": "tap"
+    },
+    "misc": {
+      "command": "npm test -- --opts test/mocha-misc.opts",
       "protocol": "tap"
     }
   },
