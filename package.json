@@ -43,5 +43,9 @@
     "test",
     "tdd",
     "bdd"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cades/respec-given"
+  }
 }
