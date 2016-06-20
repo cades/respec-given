@@ -1,14 +1,13 @@
 var Mocha = require('mocha'),
     Suite = require('mocha/lib/suite'),
     Test  = require('mocha/lib/test'),
-    factory = require('../lib/factory')
+    factory = require('../lib/factory'),
+    patchForVersionInconsistency = require('./patch-for-version-inconsistency')
 
 module.exports = Mocha.interfaces['respec-given'] = function(suite) {
   suite.on('pre-require', function(context, file, mocha) {
 
-    // workaround for https://github.com/mochajs/mocha/issues/2297
-    // this occurs in mocha@2.4.5 or above
-    suite.isPending = function() { return false }
+    patchForVersionInconsistency(suite)
 
     var core = factory.createCore({
       firstSuite: suite,
