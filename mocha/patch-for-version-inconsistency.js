@@ -1,6 +1,4 @@
-var libMochaVersion = require('mocha/package.json').version,
-    semver = require('semver'),
-    Runnable = require('mocha/lib/runnable'),
+var Runnable = require('mocha/lib/runnable'),
     Suite = require('mocha/lib/suite')
 
 // workaround for https://github.com/mochajs/mocha/issues/2297
@@ -8,22 +6,22 @@ var libMochaVersion = require('mocha/package.json').version,
 
 module.exports = function(rootSuite) {
 
-  if (libMochaVersionIsAtLeast2_4_5() &&
-      !runnerMochaVersionIsAtLeast2_4_5()) {
+  if (mochaLibImplementsIsPending() &&
+      !mochaRunnerImplementsIsPending()) {
     patchRootSuite()
   }
 
-  if (!libMochaVersionIsAtLeast2_4_5() &&
-      runnerMochaVersionIsAtLeast2_4_5()) {
+  if (!mochaLibImplementsIsPending() &&
+      mochaRunnerImplementsIsPending()) {
     patchMochaLib()
   }
 
-  function runnerMochaVersionIsAtLeast2_4_5() {
+  function mochaRunnerImplementsIsPending() {
     return !!rootSuite.isPending
   }
 
-  function libMochaVersionIsAtLeast2_4_5() {
-    return semver.gte(libMochaVersion, '2.4.5')
+  function mochaLibImplementsIsPending() {
+    return !!Suite.prototype.isPending
   }
 
   function patchRootSuite() {
