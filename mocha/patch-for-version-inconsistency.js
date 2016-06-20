@@ -34,9 +34,8 @@ module.exports = function(rootSuite) {
   }
 
   function patch(target) {
-    target.isPending = function() {
-      return this.pending || (this.parent && this.parent.isPending())
-    }
+    var isPending = Runnable.prototype.isPending || rootSuite.isPending
+    target.isPending = isPending
   }
 
 }
