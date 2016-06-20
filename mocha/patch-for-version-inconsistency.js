@@ -8,21 +8,21 @@ var libMochaVersion = require('mocha/package.json').version,
 
 module.exports = function(rootSuite) {
 
-  if (libMochaVersionIsAtLeast0_4_5() &&
-      !runnerMochaVersionIsAtLeast0_4_5()) {
+  if (libMochaVersionIsAtLeast2_4_5() &&
+      !runnerMochaVersionIsAtLeast2_4_5()) {
     patchRootSuite()
   }
 
-  if (!libMochaVersionIsAtLeast0_4_5() &&
-      runnerMochaVersionIsAtLeast0_4_5()) {
+  if (!libMochaVersionIsAtLeast2_4_5() &&
+      runnerMochaVersionIsAtLeast2_4_5()) {
     patchMochaLib()
   }
 
-  function runnerMochaVersionIsAtLeast0_4_5() {
+  function runnerMochaVersionIsAtLeast2_4_5() {
     return !!rootSuite.isPending
   }
 
-  function libMochaVersionIsAtLeast0_4_5() {
+  function libMochaVersionIsAtLeast2_4_5() {
     return semver.gte(libMochaVersion, '2.4.5')
   }
 
