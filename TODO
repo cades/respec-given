@@ -1,6 +1,5 @@
 when fail 的時候, 錯誤訊息讓人以為是 then
 
-rspec-given 的 Failure, 用來驗證 Error
 
 支援 generator, ES7 async function, Observable (ava 支援的那些)
 
@@ -82,3 +81,17 @@ coffee script loader
 then 如果有 undefined reference, 會變成 timeout
 
 mocha@2.4.5 以上的 workaround
+
+rspec-given 的 Failure, 用來驗證 Error
+如果沒有這功能的話, 會寫出這種測試:
+
+  Then -> @result instanceof MyError
+  And -> @result.message.match /my error message/
+
+可以有更好的介面嗎? 試寫看看.
+
+  Then -> Failure(@result, MyError, /my error message/)
+  Then -> IsFailure(@result, MyError, /my error message/)
+  Then -> FailureMatch(@result, MyError, /my error message/)
+  Then -> Failure(MyError, /my error message/).matches @result
+

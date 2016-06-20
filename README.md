@@ -328,6 +328,16 @@ example:
          to equal: true
 ```
 
+### Checking for Errors with Natural Assertions
+
+If you wish to see if the result of a When clause is an Error, you can use the following:
+
+    When result: -> badAction()
+    Then -> Failure(CustomError, /message/).matches @result
+    Then -> Failure(CustomError).matches @result
+    Then -> Failure(/message/).matches @result
+
+
 ### <a name="transform-test-code"></a> Transform test code
 
 The technique used here is inspired by [power-assert](https://github.com/power-assert-js/power-assert).
