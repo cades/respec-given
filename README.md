@@ -122,6 +122,7 @@ you can use object notation as a shorthand:
 
 #### Immediate Given
 
+There are several form of immediate Given. The first category is `Given(fn)`. Since it doesn't specify a variable name, it is for side-effects. The Second category is `GivenI(varname, fn)`. It will evaluate `fn` immediately and assign the returned result to `this.varname`. If error occurs in `fn`, `GivenI` expression will fail.
 
 ```js
     // Given(fn)
@@ -131,6 +132,33 @@ you can use object notation as a shorthand:
 
   Using this form, the function will be evaluated **immediately**.
 
+```js
+    Given(function() { return new Promise(...) })
+```
+
+  If the function returns a Promise, next statement will be executed until the promise is resolved.
+
+```js
+    Given(function() { return new Observable(...) })
+```
+
+  If the function returns an Observable, next statement will be executed until the observable is complete.
+
+```js
+    // Given(fn(done))
+    Given(function(done) {
+      asyncOp(done)
+    })
+```
+
+  Using this form, you can perform an asynchronous operation. When finished, you should call `done()` is success, or `done(err)` if the operation failed.
+
+```js
+    // Given(generatorFn)
+    Given(function*() { yield yieldable })
+```
+
+  generator function is also supported. It will be executed until it returns or throws.
 
 ```js
     // GivenI("varname", fn)
@@ -138,6 +166,13 @@ you can use object notation as a shorthand:
 ```
 
   Using this form, the function will be evaluated **immediately** and the return value is assigned to `this.stack`.
+
+Note unlike lazy-Given, if `fn` returns a Promise or an Observable, it will be resolved/completed automatically.
+
+Also, `fn` can have a callback with signature `(err, res)`, so you can perform asynchronous operation.
+
+`fn` can also be a generator function. the returned value will be assigned to `this.varname`.
+
 
 #### Let statement
 
