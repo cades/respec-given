@@ -1,3 +1,5 @@
+錯誤訊息目前 documentationify(fn) 只呈現 Then expression, 缺少上層 describe/context 的文字
+
 bdd interface
 - 相容於 mocha 預設的 bdd interface. 可以直接用, 無痛轉換
 - 底層實作跟 Given 的系統互通, before/beforeEach/after/afterEach 與 G/W/T/I/A 的順序要確定
@@ -99,4 +101,15 @@ rspec-given 的 Failure, 用來驗證 Error
 支援 generator & Observable
 
 when fail 的時候, 錯誤訊息讓人以為是 then
+
+When(fn) 發生 error 會被報出來               pass
+Given(fn) 發生 error 會被報出來              pass
+When(result, fn) 發生 error 會被塞給 result  pass
+GivenI(varname, fn) 發生 error 會???         fail
+  目前因為 GivenI 是 WhenLike, 所以會塞給 varname.
+  但 rspec-given Given! 是 let! 的 alias, let! 會怎麼做呢?
+  文件沒寫, 實際試試看吧!
+  會報錯. Given 跟 Given! 都會!
+  所以 GivenI 跟 When 在這點的行為是不同的
+
 
