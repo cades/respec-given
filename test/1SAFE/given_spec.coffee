@@ -1,3 +1,5 @@
+Observable = require "zen-observable"
+
 describe 'Given(fn)', ->
   describe 'should be executed immediately', ->
 
@@ -33,6 +35,16 @@ describe 'Given(fn)', ->
 
     describe 'support promise', ->
       Given -> Promise.resolve().then => @subject = -> 'cool'
+      When 'result', -> @subject()
+      Then -> @result == 'cool'
+
+    describe 'support generator', ->
+      Given -> @subject = yield Promise.resolve(-> 'cool')
+      When 'result', -> @subject()
+      Then -> @result == 'cool'
+
+    describe 'support observable', ->
+      Given -> Observable.of('cool').map (x) => @subject = -> x
       When 'result', -> @subject()
       Then -> @result == 'cool'
 

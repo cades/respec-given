@@ -167,6 +167,12 @@ Since ES6 introduce `let` keyword, to avoid name collision, respec-given choose 
   If the function returns a Promise, next statement will be executed until the promise is resolved.
 
 ```js
+    When(function() { return new Observable(...) })
+```
+
+  If the function returns an Observable, next statement will be executed until the observable is complete.
+
+```js
     // When(fn(done))
     When(function(done) {
       asyncOp(function(err, res) {
@@ -176,6 +182,13 @@ Since ES6 introduce `let` keyword, to avoid name collision, respec-given choose 
 ```
 
   Using this form, you can perform an asynchronous operation. When finished, you should call `done()` is success, or `done(err)` if the operation failed.
+
+```js
+    // When(generatorFn)
+    When(function*() { yield yieldable })
+```
+
+  generator function is also supported. It will be executed until it returns or throws.
 
 ```js
     // When("result", fn)
@@ -213,6 +226,13 @@ Since ES6 introduce `let` keyword, to avoid name collision, respec-given choose 
   Using this form, you can perform asynchronous operation here, while finished you should call `done(res)`, or `done(null, res)` if you prefer Node.js convention. Call `done(err)` if the operation failed. Whatever value you fill into the callback, it will be assigned to `this.result`.
   
   If the function throws an error **synchronously**, the error will be caught and assigned to `this.result`.
+
+```js
+    // When("result", generatorFn)
+    When('result', function*() { return yield yieldable })
+```
+
+  generator function is also supported. It will be executed until it returns or throws. The value it returns or throws will be assigned to `this.result`.
 
 If you have multiple `When`s, like
 

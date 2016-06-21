@@ -1,3 +1,5 @@
+Observable = require "zen-observable"
+
 describe 'When(fn)', ->
 
   describe 'when is not lazy', ->
@@ -16,6 +18,14 @@ describe 'When(fn)', ->
     When -> Promise.resolve().then => @result = 'cool'
     Then -> @result == 'cool'
 
+  describe 'support generator', ->
+    When -> @result = yield Promise.resolve('cool')
+    Then -> @result == 'cool'
+
+  describe 'support observable', ->
+    When -> Observable.of('cool').map (x) => @result = x
+    Then -> @result == 'cool'
+
   describe 'this form will NOT capture thrown Error', ->
     Then.skip 'I dont know how to test this'
 
@@ -29,6 +39,26 @@ describe 'When(result, fn)', ->
 
     context 'reject', ->
       When 'result', -> Promise.reject 'oops!'
+      Then -> @result == 'oops!'
+
+  describe 'support generator', ->
+
+    context 'success', ->
+      When 'result', -> yield Promise.resolve('cool')
+      Then -> @result == 'cool'
+
+    context 'error', ->
+      When 'result', -> yield Promise.reject 'oops!'
+      Then -> @result == 'oops!'
+
+  describe 'support observable', ->
+
+    context 'success', ->
+      When 'result', -> Observable.of('cool')
+      Then -> @result[0] == 'cool'
+
+    context 'error', ->
+      When 'result', -> new Observable (observer) -> observer.error('oops!')
       Then -> @result == 'oops!'
 
   describe 'can capture thrown Error', ->
