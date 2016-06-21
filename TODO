@@ -1,3 +1,8 @@
+bdd interface
+- 相容於 mocha 預設的 bdd interface. 可以直接用, 無痛轉換
+- 底層實作跟 Given 的系統互通, before/beforeEach/after/afterEach 與 G/W/T/I/A 的順序要確定
+- Then 會使用 before/after
+- it 會使用 Given/Then 嗎???
 
 把 rspec-given 的 test case porting 過來
 整理 code
