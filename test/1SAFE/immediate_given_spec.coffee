@@ -1,3 +1,5 @@
+Observable = require "zen-observable"
+
 describe "GivenI(var, fn)", ->
 
   context 'example: Character can be damaged', ->
@@ -34,6 +36,18 @@ describe "GivenI(var, fn)", ->
         When -> @attacker.attack(@defender, 1)
 
         Then -> @defender.hit_points == @original_hp - 1
+
+  describe 'support promise', ->
+    GivenI -> Promise.resolve().then => @result = 'cool'
+    Then -> @result == 'cool'
+
+  describe 'support generator', ->
+    Given -> @result = yield Promise.resolve('cool')
+    Then -> @result == 'cool'
+
+  describe 'support observable', ->
+    Given -> Observable.of('cool').map (x) => @result = x
+    Then -> @result == 'cool'
 
 describe "GivenI(hash)", ->
 
