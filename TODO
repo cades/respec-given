@@ -1,6 +1,3 @@
-when fail 的時候, 錯誤訊息讓人以為是 then
-
-
 
 把 rspec-given 的 test case porting 過來
 整理 code
@@ -95,4 +92,6 @@ rspec-given 的 Failure, 用來驗證 Error
   Then -> Failure(MyError, /my error message/).matches @result
 
 支援 generator & Observable
+
+when fail 的時候, 錯誤訊息讓人以為是 then
 
