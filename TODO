@@ -113,3 +113,5 @@ GivenI(varname, fn) 發生 error 會???         fail
   所以 GivenI 跟 When 在這點的行為是不同的
 
 
+一口氣處理各種 expression
+
