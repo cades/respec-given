@@ -10,7 +10,7 @@ module.exports = Mocha.interfaces['respec-given'] = function(suite) {
     patchForVersionInconsistency(suite)
 
     var core = factory.createCore({
-      firstSuite: suite,
+      rootSuite: suite,
       addSuiteCallback: function(currentSuite, title) {
         var suite = Suite.create(currentSuite, title)
         suite.file = file
