@@ -258,7 +258,9 @@ Since ES6 introduce `let` keyword, to avoid name collision, respec-given choose 
     })
 ```
 
-  Using this form, you can perform asynchronous operation here, while finished you should call `done(res)`, or `done(null, res)` if you prefer Node.js convention. Call `done(err)` if the operation failed. Whatever value you fill into the callback, it will be assigned to `this.result`.
+  Using this form, you can perform asynchronous operation here.
+  If operation succeed, you should call `done(null, res)`, and `res` will be assigned to `this.result`.
+  If operation failed, you should call `done(err)`, and `err` will be assigned to `this.result`.
   
   If the function throws an error **synchronously**, the error will be caught and assigned to `this.result`.
 

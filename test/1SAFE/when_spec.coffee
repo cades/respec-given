@@ -98,18 +98,6 @@ describe 'When(result, fn(done))', ->
     When 'result', (done) -> done('cool')
     Then -> @result == 'cool'
 
-    describe 'can handle falsy value', ->
-      When 'false', (cb) -> cb(false)
-      When 'zero', (cb) -> cb(0)
-      When 'null', (cb) -> cb(null)
-      When 'emptystr', (cb) -> cb("")
-      When 'NaN', (cb) -> cb(NaN)
-      Then -> @false == false
-      Then -> @zero == 0
-      Then -> @null == null
-      Then -> @emptystr == ''
-      Then -> isNaN @NaN
-
   describe 'can capture thrown Error', ->
     When 'result', (done) -> throw new Error 'oops!'
     Then -> @result.message == 'oops!'
