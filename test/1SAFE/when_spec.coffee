@@ -89,10 +89,10 @@ describe 'When(result, fn(done))', ->
       When 'emptystr', (cb) -> cb(null, "")
       When 'NaN', (cb) -> cb(null, NaN)
       Then -> @false == false
-      Then -> @zero == 0
-      Then -> @null == null
-      Then -> @emptystr == ''
-      Then -> isNaN @NaN
+      And -> @zero == 0
+      And -> @null == null
+      And -> @emptystr == ''
+      And -> isNaN @NaN
 
   describe 'raw callback (1st arg)', ->
     When 'result', (done) -> done('cool')
