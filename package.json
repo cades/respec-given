@@ -1,6 +1,6 @@
 {
   "name": "respec-given",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "bring rspec-given to JS world, on mocha",
   "author": {
     "name": "cades kao",
