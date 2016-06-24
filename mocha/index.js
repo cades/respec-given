@@ -47,5 +47,8 @@ module.exports = Mocha.interfaces['respec-given'] = function(suite) {
     context.And = core.And
     context.Then.skip = context.xit
     context.Failure = core.Failure
+
+    context.ThenError = core.ThenError
+    context.ThenFail = core.ThenFail
   })
 }

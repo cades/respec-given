@@ -26,9 +26,6 @@ describe 'When(fn)', ->
     When -> Observable.of('cool').map (x) => @result = x
     Then -> @result == 'cool'
 
-  describe 'this form will NOT capture thrown Error', ->
-    Then.skip 'I dont know how to test this'
-
 describe 'When(result, fn)', ->
 
   describe 'promise returned by fn will be automatically resolved', ->
