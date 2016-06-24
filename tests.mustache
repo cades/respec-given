@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Test'em</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/mocha/2.5.3/mocha.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/mocha/2.5.3/mocha.js"></script>
+    <script src="/testem.js"></script>
+    <script src="../mocha/browser.js"></script>
+    <script>mocha.setup('respec-given')</script>
+    {{#serve_files}}
+    <script src="{{src}}"></script>
+    {{/serve_files}}
+  </head>
+  <body>
+    <div id="mocha"></div>
+    <script>
+      mocha.run()
+    </script>
+  </body>
+</html>

@@ -30,8 +30,9 @@ describe "GivenI(var, fn)", ->
         Given 'attacker', -> Character("Attacker")
         Given 'defender', -> Character("Defender")
         GivenI 'original_hp', (done) ->
-          setImmediate =>
+          setTimeout =>
             done(null, @defender.hit_points)
+          , 0
 
         When -> @attacker.attack(@defender, 1)
 

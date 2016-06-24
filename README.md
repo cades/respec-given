@@ -12,17 +12,30 @@ rspec-given is awesome. While embrace JavaScript's asynchronous nature, respec-g
 install `respec-given` locally
 
     npm install --save-dev respec-given
-    
-then run mocha with it:
+
+## Usage
+
+### Node.js
+
+with `mocha` command:
 
     mocha --ui respec-given --require respec-given/na-loader
-    
+
 in case your tests are written in CoffeeScript:
 
     mocha --ui respec-given --require respec-given/na-loader/coffee
 
 see more about [natural assertion loaders](#transform-test-code)
-    
+
+
+### Browser
+
+add script tag after load mocha:
+
+    <script src="node_modules/respec-given/mocha/browser.js"></script>
+    <script>mocha.setup('respec-given')</script>
+
+natural assertion transformation tools is not available yet, but you won't wait too long :)
 
 ## Demo
 

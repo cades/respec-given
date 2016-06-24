@@ -27,9 +27,10 @@ describe 'Given(fn)', ->
 
     describe 'support async', ->
       Given (done) ->
-        setImmediate =>
+        setTimeout =>
           @subject = -> 'cool'
           done()
+        , 0
       When 'result', -> @subject()
       Then -> @result == 'cool'
 
@@ -95,8 +96,9 @@ describe 'Given(varname, fn)', ->
     context 'subject is a function that consume a node-style callback', ->
       Given 'subject', ->
         (done) =>
-          setImmediate =>
+          setTimeout =>
             done(null, 'cool')
+          , 0
       When 'result', (cb) -> @subject(cb)
       Then -> @result == 'cool'
 

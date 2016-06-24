@@ -9,9 +9,10 @@ describe 'When(fn)', ->
 
   describe 'support async', ->
     When (done) ->
-      setImmediate =>
-         @result = 'cool'
-         done()
+      setTimeout =>
+        @result = 'cool'
+        done()
+      , 0
     Then -> @result == 'cool'
 
   describe 'support promise (automatically resolve)', ->
@@ -71,8 +72,9 @@ describe 'When(result, fn(done))', ->
 
   context 'async callback', ->
     When 'result', (done) ->
-      setImmediate =>
+      setTimeout =>
         done(null, 'cool')
+      , 0
     Then -> @result == 'cool'
 
   describe 'node-style callback (2nd arg)', ->
