@@ -354,7 +354,7 @@ please refer to [rspec-given's documentation](https://github.com/jimweirich/rspe
 please refer to [rspec-given's documentation](https://github.com/jimweirich/rspec-given#execution-ordering)
 
 
-## <a name="natural-assertion"></a> Natural Assertions
+## <a name="natural-assertion"></a>Natural Assertions
 
 respec-given supports "natural assertions" in *Then*, *And*, and *Invariant* blocks. Natural assertions are just boolean expressions, without additional assertion library.
 
@@ -408,7 +408,7 @@ If you wish to see if the result of a When clause is an Error, you can use the f
     Then -> Failure(/message/).matches @result
 
 
-### <a name="transform-test-code"></a> Transform test code
+### <a name="transform-test-code"></a>Transform test code
 
 The technique used here is inspired by [power-assert](https://github.com/power-assert-js/power-assert).
 
