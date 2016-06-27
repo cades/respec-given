@@ -21,10 +21,6 @@ with `mocha` command:
 
     mocha --ui respec-given --require respec-given/na-loader
 
-in case your tests are written in CoffeeScript:
-
-    mocha --ui respec-given --require respec-given/na-loader/coffee
-
 see more about [natural assertion loaders](#transform-test-code)
 
 
@@ -410,15 +406,48 @@ If you wish to see if the result of a When clause is an Error, you can use the f
 
 ### <a name="transform-test-code"></a>Transform test code
 
-The technique used here is inspired by [power-assert](https://github.com/power-assert-js/power-assert).
+#### What is a *natural assertion loader*?
 
-there are 2 Node.js loader out of the box:
+Natural assertion loader is a tool which analysis test code's `Then` expression, gather context information, and generate code that carries these information. When assertion failed (return false), these information are used to evaluate failed Then clause's subexpression and generate diagnosis message for you.
+
+#### Why tooling?
+
+Because in JavaScript, lexical binding can not be "captured" during execution time. Lexical binding is resolved at lex time, it's the world view of specific block of code. You have no way to share this view to others (in JavaScript). For example:
+
+```js
+    var x = 1
+    Then(function() { return x == 0 })
+```
+
+`Then` received a function, which returns `false`. Even `Then` can know `x`'s existence by analysis `fn.toString()`, `Then` have no way to access `x`. No.
+
+This is a meta-programming problem, which can not be solved in JavaScript itself. That's why we need a loader (preprocessor, transpiler, instrumenter, whatever you like to call it).
+
+#### When do I need it?
+
+When you use natural assertion, transformed test code would generate more helpful error message for you.
+
+On the other hand, if you are using assertion library (like node.js built-in `assert`, `chai.js`, `expect.js`, or `shouldjs`), which provide their diagnosis message already, then you don't need natural assertion loader.
+
+#### Ok. Tell me how to use it.
+
+there are 3 Node.js loader out of the box:
 
 - JavaScript loader
 
+    ```bash
     mocha --ui respec-given --require respec-given/na-loader
+    ```
     
 - CoffeeScript loader
 
+    ```bash
     mocha --ui respec-given --require respec-given/na-loader/coffee
+    ```
+
+- LiveScript loader
+
+    ```bash
+    mocha --ui respec-given --require respec-given/na-loader/ls
+    ```
 

@@ -17,6 +17,7 @@
     "estraverse": "4.2.0",
     "is-generator-fn": "1.0.0",
     "is-observable": "0.2.0",
+    "livescript": "1.5.0",
     "lodash": "4.13.1",
     "minimatch": "3.0.0",
     "observable-to-promise": "0.4.0",
