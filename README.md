@@ -35,7 +35,7 @@ natural assertion transformation tools is not available yet, but you won't wait 
 
 ## Demo
 
-[![asciicast](https://asciinema.org/a/49432.png)](https://asciinema.org/a/49432)
+![usage demo](https://raw.githubusercontent.com/cades/respec-given/master/doc/demo.gif)
 
 
 ## Example
