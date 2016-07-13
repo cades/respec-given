@@ -44,6 +44,7 @@ module.exports = function(Mocha, Suite, Test) {
       context.Then = core.Then
       context.Invariant = core.Invariant
       context.And = core.And
+      context.Cleanup = core.Cleanup
       context.Then.skip = context.xit
       context.Failure = core.Failure
 
