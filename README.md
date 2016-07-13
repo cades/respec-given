@@ -7,6 +7,11 @@ If you never heard any project mentioned above, I highly recommend you watching 
 rspec-given is awesome. While embrace JavaScript's asynchronous nature, respec-given aims to strictly meet rspec-given's spec. Seriously.
 
 
+## Demo
+
+![usage demo](https://raw.githubusercontent.com/cades/respec-given/master/doc/demo.gif)
+
+
 ## Installation
 
 install `respec-given` locally
@@ -32,11 +37,6 @@ add script tag after load mocha:
     <script>mocha.setup('respec-given')</script>
 
 natural assertion transformation tools is not available yet, but you won't wait too long :)
-
-## Demo
-
-![usage demo](https://raw.githubusercontent.com/cades/respec-given/master/doc/demo.gif)
-
 
 ## Example
 
