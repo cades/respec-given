@@ -36,10 +36,10 @@
     "zen-observable": "0.2.1"
   },
   "scripts": {
-    "test": "mocha",
+    "test": "npm run link && mocha",
     "tdd": "testem",
     "build": "browserify mocha/browser-entry.js -o mocha/browser.js",
-    "link": "mkdir -p node_modules/respec-given && cd node_modules/respec-given && ln -s ../../package.json package.json && ln -s ../../index.js index.js && ln -s ../../lib lib && ln -s ../../mocha mocha && cd -"
+    "link": "rm -rf node_modules/respec-given && mkdir -p node_modules/respec-given && cd node_modules/respec-given && ln -s ../../package.json package.json && ln -s ../../index.js index.js && ln -s ../../lib lib && ln -s ../../mocha mocha && cd -"
   },
   "keywords": [
     "mocha",
