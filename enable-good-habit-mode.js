@@ -1,1 +1,1 @@
-require('./lib/good-habit-mode').enable()
+require('respec-given-core/enable-good-habit-mode')

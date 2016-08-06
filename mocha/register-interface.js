@@ -1,4 +1,4 @@
-var factory = require('../lib/factory'),
+var respecGivenCore = require('respec-given-core'),
     patchForVersionInconsistency = require('./patch-for-version-inconsistency')
 
 module.exports = function(Mocha, Suite, Test) {
@@ -8,7 +8,7 @@ module.exports = function(Mocha, Suite, Test) {
 
       patchForVersionInconsistency(suite)
 
-      var core = factory.createCore({
+      var core = respecGivenCore.createCore({
         rootSuite: suite,
         addSuiteCallback: function(currentSuite, title) {
           var suite = Suite.create(currentSuite, title)

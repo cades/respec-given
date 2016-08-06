@@ -3,7 +3,7 @@ var originalLoader = extensions['.js']
 var fs = require('fs')
 var path = require('path')
 var minimatch = require('minimatch')
-var transformThenStatement = require('../../lib/transform-then')
+var transformThenStatement = require('respec-given-core/lib/transform-then')
 
 function naturalAssertionJSLoader(options) {
 

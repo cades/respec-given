@@ -2,7 +2,7 @@ var coffee = require('coffee-script')
 var originalCompileFile = coffee._compileFile
 var minimatch = require('minimatch')
 var convert = require('convert-source-map')
-var transformThenStatement = require('../../lib/transform-then')
+var transformThenStatement = require('respec-given-core/lib/transform-then')
 
 function naturalAssertionCoffeeLoader (options) {
 

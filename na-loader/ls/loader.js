@@ -1,7 +1,7 @@
 var LiveScript = require('livescript')
 var originalCompile = LiveScript.compile
 var minimatch = require('minimatch')
-var transformThenStatement = require('../../lib/transform-then')
+var transformThenStatement = require('respec-given-core/lib/transform-then')
 
 function naturalAssertionLiveScriptLoader(options) {
 
