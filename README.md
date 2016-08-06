@@ -1,5 +1,7 @@
 # respec-given
 
+[![Build Status](https://travis-ci.org/cades/respec-given.svg?branch=master)](https://travis-ci.org/cades/respec-given)
+
 respec-given is an extension to the mocha testing framework. It encourages cleaner, readable, and maintainable specs/tests using `Given`, `When`, and `Then`. It is a shameless tribute to Ludwig Magnusson's [mocha-gwt](https://github.com/TheLudd/mocha-gwt), Robert Fleischmann's [mocha-given](https://github.com/rendro/mocha-given), Justin Searl's [jasmine-given](https://github.com/searls/jasmine-given), James Sadler's [given.js](https://github.com/freshtonic/given.js), Sergii Stotskyi's [bdd-lazy-var](https://github.com/stalniy/bdd-lazy-var), and the origination of all: Jim Weirich's [rspec-given](https://github.com/jimweirich/rspec-given) gem.
 
 If you never heard any project mentioned above, I highly recommend you watching [How to Stop Hating your Test Suite](https://youtu.be/VD51AkG8EZw?t=8m42s) by Justin Searls, which inspired me to start this project.
