@@ -42,56 +42,64 @@ natural assertion transformation tools is not available yet, but you won't wait 
 
 ## Example
 
-Here is a spec written in respec-given and CoffeeScript. (for JavaScript example, click [here](#lexical-style))
+Here is a spec written in respec-given.
 
-```coffeescript
-Stack = require('../stack')
+```js
+const Stack = require('../stack');
 
-describe 'Stack', ->
+describe('Stack', () => {
 
-  stack_with = (initial_contents) ->
-    stack = Object.create Stack
-    initial_contents.forEach (item) -> stack.push(item)
-    stack
+  const stack_with = (initial_contents) => {
+    var stack = Object.create(Stack);
+    initial_contents.forEach(item => stack.push(item))
+    return stack;
+  };
 
-  Given stack: -> stack_with(@initial_contents)
-  Invariant -> @stack.empty() == (@stack.depth() == 0)
+  Given('stack', $ => stack_with($.initial_contents))
+  Invariant($ => $.stack.empty() === ($.stack.depth() === 0))
 
-  context "with no items", ->
-    Given initial_contents: -> []
-    Then -> @stack.depth() == 0
+  context("with no items", () => {
+    Given('initial_contents', () => [] )
+    Then($ => $.stack.depth() === 0)
 
-    context "when pushing", ->
-      When -> @stack.push('an_item')
+    context("when pushing", => {
+      When($ => $.stack.push('an_item'))
 
-      Then -> @stack.depth() == 1
-      Then -> @stack.top() == 'an_item'
+      Then($ => $.stack.depth() === 1)
+      Then($ => $.stack.top() === 'an_item')
+    })
+  })
 
-  context "with one item", ->
-    Given initial_contents: -> ['an_item']
+  context("with one item", () => {
+    Given('initial_contents', () => ['an_item'])
 
-    context "when popping", ->
-      When pop_result: -> @stack.pop()
+    context("when popping", () => {
+      When('pop_result', $ => $.stack.pop())
 
-      Then -> @pop_result == 'an_item'
-      Then -> @stack.depth() == 0
+      Then($ => $.pop_result === 'an_item')
+      Then($ => $.stack.depth() === 0)
+    })
+  })
 
-  context "with several items", ->
-    Given initial_contents: -> ['second_item', 'top_item']
-    GivenI original_depth: -> @stack.depth()
+  context("with several items", () => {
+    Given('initial_contents', () => ['second_item', 'top_item'])
+    GivenI('original_depth', () => @stack.depth())
 
-    context "when pushing", ->
-      When -> @stack.push('new_item')
+    context("when pushing", () => {
+      When($ => $.stack.push('new_item'))
 
-      Then -> @stack.top() == 'new_item'
-      Then -> @stack.depth() == @original_depth + 1
+      Then($ => $.stack.top() === 'new_item')
+      Then($ => $.stack.depth() === @original_depth + 1)
+    })
 
-    context "when popping", ->
-      When pop_result: -> @stack.pop()
+    context("when popping", () => {
+      When('pop_result', $ => $.stack.pop())
 
-      Then -> @pop_result == 'top_item'
-      Then -> @stack.top() == 'second_item'
-      Then -> @stack.depth() == @original_depth - 1
+      Then($ => $.pop_result === 'top_item')
+      Then($ => $.stack.top() === 'second_item')
+      Then($ => $.stack.depth() === @original_depth - 1)
+    })
+  })
 ```
 
 Before we take a closer look at each statement used in respec-given, I hope you can read rspec-given's [documentation](https://github.com/jimweirich/rspec-given#given) first. It explained **the idea behind its design** excellently.
@@ -107,18 +115,18 @@ Instead of repeat Jim's words, I'll simply introduce API here.
 
 ```js
     // Given("varname", fn)
-    Given('stack', function() { return stack_with([]) })
+    Given('stack', () => stack_with([]) )
 ```
 
-`this.stack` become accessible in other clauses.
+`$.stack` become accessible in other clauses.
 
-The function will be evaluated until first access to `this.stack`. Once the function is evaluated, the result is cached.
+The function will be evaluated until first access to `$.stack`. Once the function is evaluated, the result is cached.
 
 If you have multiple `Given`s, like
 
 ```js
-    Given('stack1', function() { return stack_with([1, 2]) })
-    Given('stack2', function() { return stack_with([3, 4]) })
+    Given('stack1', () => stack_with([1, 2]) )
+    Given('stack2', () => stack_with([3, 4]) )
 ```
 
 you can use object notation as a shorthand:
@@ -126,8 +134,8 @@ you can use object notation as a shorthand:
 ```js
     // Given({hash})
     Given({
-      stack1: function() { return stack_with([1, 2]) },
-      stack2: function() { return stack_with([3, 4]) }
+      stack1: () => stack_with([1, 2]),
+      stack2: () => stack_with([3, 4])
     })
 ```
 
@@ -137,27 +145,26 @@ There are several form of immediate Given. The first category is `Given(fn)`. Si
 
 ```js
     // Given(fn)
-    var stack
-    Given(function() { stack = stack_with([]) })
+    Given(($) => stack_with([]) )
 ```
 
   Using this form, the function will be evaluated **immediately**.
 
 ```js
-    Given(function() { return new Promise(...) })
+    Given(() => new Promise(...) )
 ```
 
   If the function returns a Promise, next statement will be executed until the promise is resolved.
 
 ```js
-    Given(function() { return new Observable(...) })
+    Given(() => new Observable(...) )
 ```
 
   If the function returns an Observable, next statement will be executed until the observable is complete.
 
 ```js
     // Given(fn(done))
-    Given(function(done) {
+    Given(($, done) => {
       asyncOp(done)
     })
 ```
@@ -173,16 +180,16 @@ There are several form of immediate Given. The first category is `Given(fn)`. Si
 
 ```js
     // GivenI("varname", fn)
-    GivenI('stack', function() { return stack_with([]) })
+    GivenI('stack', () => stack_with([]) )
 ```
 
-  Using this form, the function will be evaluated **immediately** and the return value is assigned to `this.stack`.
+  Using this form, the function will be evaluated **immediately** and the return value is assigned to `$.stack`.
 
 Note unlike lazy-Given, if `fn` returns a Promise or an Observable, it will be resolved/completed automatically.
 
 Also, `fn` can have a callback with signature `(err, res)`, so you can perform asynchronous operation.
 
-`fn` can also be a generator function. the returned value will be assigned to `this.varname`.
+`fn` can also be a generator function. the returned value will be assigned to `$.varname`.
 
 
 #### Let statement
@@ -201,26 +208,26 @@ Since ES6 introduce `let` keyword, to avoid name collision, respec-given choose 
 
 ```js
     // When(fn)
-    When(function() { stack.pop() })
+    When($ => $.stack.pop())
 ```
 
   this function will be executed immediately.
 
 ```js
-    When(function() { return new Promise(...) })
+    When(() => new Promise(...) )
 ```
 
   If the function returns a Promise, next statement will be executed until the promise is resolved.
 
 ```js
-    When(function() { return new Observable(...) })
+    When(() => new Observable(...) )
 ```
 
   If the function returns an Observable, next statement will be executed until the observable is complete.
 
 ```js
-    // When(fn(done))
-    When(function(done) {
+    // When(fn($, done))
+    When(($, done) => {
       asyncOp(function(err, res) {
         done(err, res)
       })
@@ -238,31 +245,31 @@ Since ES6 introduce `let` keyword, to avoid name collision, respec-given choose 
 
 ```js
     // When("result", fn)
-    When('pop_result', function() { return this.stack.pop() })
-    Then(function() { this.pop_result === 'top_item' })
+    When('pop_result', $ => $.stack.pop() )
+    Then($ => $.pop_result === 'top_item' )
 ```
 
-  Using this form, the function will be executed immediately and the return value is assigned to `this.pop_result`.
+  Using this form, the function will be executed immediately and the return value is assigned to `$.pop_result`.
 
 ```js
-    When('result1', function() { return Promise.resolve(1) })
-    When('result2', function() { return Promise.reject(2) })
-    Then(function() { this.result1 === 1 })
-    Then(function() { this.result2 === 2 })
+    When('result1', () => Promise.resolve(1) )
+    When('result2', () => Promise.reject(2) )
+    Then($ => $.result1 === 1 )
+    Then($ => $.result2 === 2 )
 ```
 
-  If the function return a Promise, the promise will be resolved to a value (or an error) first, then assign the resolved value to `this.result`.
+  If the function return a Promise, the promise will be resolved to a value (or an error) first, then assign the resolved value to `$.result`.
   
 ```js
-    When('result', function() { throw new Error('oops!') })
-    Then(function() { this.result.message === 'oops' })
+    When('result', () => throw new Error('oops!') )
+    Then($ => $.result.message === 'oops' )
 ```
 
-  If the function throws an error synchronously, the error will be caught and assigned to `this.result`.
+  If the function throws an error synchronously, the error will be caught and assigned to `$.result`.
 
 ```js
-    // When("result", fn(done))
-    When('result', function(done) {
+    // When("result", fn($, done))
+    When('result', ($, done) => {
       asyncOp(function(err, res) {
         done(err, res)
       })
@@ -270,23 +277,23 @@ Since ES6 introduce `let` keyword, to avoid name collision, respec-given choose 
 ```
 
   Using this form, you can perform asynchronous operation here.
-  If operation succeed, you should call `done(null, res)`, and `res` will be assigned to `this.result`.
-  If operation failed, you should call `done(err)`, and `err` will be assigned to `this.result`.
+  If operation succeed, you should call `done(null, res)`, and `res` will be assigned to `$.result`.
+  If operation failed, you should call `done(err)`, and `err` will be assigned to `$.result`.
   
-  If the function throws an error **synchronously**, the error will be caught and assigned to `this.result`.
+  If the function throws an error **synchronously**, the error will be caught and assigned to `$.result`.
 
 ```js
     // When("result", generatorFn)
     When('result', function*() { return yield yieldable })
 ```
 
-  generator function is also supported. It will be executed until it returns or throws. The value it returns or throws will be assigned to `this.result`.
+  generator function is also supported. It will be executed until it returns or throws. The value it returns or throws will be assigned to `$.result`.
 
 If you have multiple `When`s, like
 
 ```js
-    When('result1', function() { return stack1.pop() })
-    When('result2', function() { return stack2.pop() })
+    When('result1', () => stack1.pop() )
+    When('result2', () => stack2.pop() )
 ```
 
 you can use object notation as a shorthand:
@@ -294,8 +301,8 @@ you can use object notation as a shorthand:
 ```js
     // When({hash})
     When({
-      result1: function() { return stack1.pop() }),
-      result2: function() { return stack2.pop() })
+      result1: () => stack1.pop() ),
+      result2: () => stack2.pop() )
     })
 ```
 
@@ -311,19 +318,19 @@ OK, let's see some example!
 
 ```js
     // Then(fn)
-    Then(function() { expect(this.result).to.be(1) })
+    Then($ => expect($.result).to.be(1) )
 ```
 
 This form uses a 3rd-party assertion/matcher library, for example, chai.js.
 
 ```js
-    Then(function() { return this.result === 1 })
+    Then($ => $.result === 1 )
 ```
 
 This form returns a boolean expression, this is called [*natural assertion*](#natural-assertion). if the function returns a **boolean false**, this test is considered fail.
 
 ```js
-    Then(function(done) {
+    Then(($, done) =>
       asyncVerification(function(err, res) {
         done(err, res)
       })
@@ -367,10 +374,10 @@ If the test code is not transformed, simple failure message applies. Otherwise, 
 example:
 
 ```
-     Error: Then { this.stack.depth() === 0 }
+     Error: Then { $.stack.depth() === 0 }
 
        Invariant expression failed.
-       Failing expression: Invariant { this.stack.empty() === (this.stack.depth() === 0) }
+       Failing expression: Invariant { $.stack.empty() === ($.stack.depth() === 0) }
 
 ```
 
@@ -379,18 +386,18 @@ example:
 example:
 
 ```
-  Error: Then { this.stack.depth() === 0 }
+  Error: Then { $.stack.depth() === 0 }
 
   Invariant expression failed at test/stack_spec.coffee:23:13
 
-         Invariant { this.stack.empty() === (this.stack.depth() === 0) }
-                          |     |    |  |         |     |    |  |
-                          |     |    |  |         |     |    0  true
-                          |     |    |  |         |     #function#
-                          |     |    |  false     Object{_arr:[]}
-                          |     |    false
-                          |     #function#
-                          Object{_arr:[]}
+         Invariant { $.stack.empty() === ($.stack.depth() === 0) }
+                       |     |    |  |      |     |    |  |
+                       |     |    |  |      |     |    0  true
+                       |     |    |  |      |     #function#
+                       |     |    |  false  Object{_arr:[]}
+                       |     |    false
+                       |     #function#
+                       Object{_arr:[]}
 
          expected: false
          to equal: true
@@ -418,7 +425,7 @@ Because in JavaScript, lexical binding can not be "captured" during execution ti
 
 ```js
     var x = 1
-    Then(function() { return x == 0 })
+    Then(() => x == 0 )
 ```
 
 `Then` received a function, which returns `false`. Even `Then` can know `x`'s existence by analysis `fn.toString()`, `Then` have no way to access `x`. No.
