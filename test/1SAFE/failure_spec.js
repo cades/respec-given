@@ -13,15 +13,15 @@ describe('Failure Expression', () => {
     When('result', () => { throw new MyError('message'); });
 
     context('with type', () => {
-      Then(function() { return Failure(MyError).matches(this.result); });
+      Then($ => Failure(MyError).matches($.result));
     });
 
     context('with regexp', () => {
-      Then(function() { return Failure(/message/).matches(this.result); });
+      Then($ => Failure(/message/).matches($.result));
     });
 
     context('with type and regexp', () => {
-      Then(function() { return Failure(MyError, /message/).matches(this.result); });
+      Then($ => Failure(MyError, /message/).matches($.result));
     });
   });
 });

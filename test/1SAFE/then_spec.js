@@ -3,7 +3,7 @@ var expect = require('expect.js');
 describe("Then(fn)", () => {
 
   context('with natural assertion', () => {
-    Then(() =>  1 === 1);
+    Then(() => 1 === 1);
   });
 
   context('with assertion library', () => {

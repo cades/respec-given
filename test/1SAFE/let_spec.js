@@ -2,7 +2,7 @@ describe('Let(varname, fn)', () => {
 
   describe('should be accessible on `this`', () => {
     Let('user', () => 'cades');
-    Then(function() { return this.user === 'cades'; });
+    Then($ => $.user === 'cades');
   });
 
   describe('should be lazy', () => {
@@ -17,11 +17,11 @@ describe('Let(varname, fn)', () => {
       cnt++;
       return 1;
     });
-    Then(function() { return cnt === 0; });
-    And(function() { return this.one; });
-    And(function() { return cnt === 1; });
-    And(function() { return this.one; });
-    And(function() { return cnt === 1; });
+    Then($ => cnt === 0);
+    And($ => $.one);
+    And($ => cnt === 1);
+    And($ => $.one);
+    And($ => cnt === 1);
   });
 });
 
