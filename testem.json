@@ -18,10 +18,11 @@
     "lib/**/*.js",
     "na-loader/**/*.js"
   ],
-  "before_tests": "browserify -t coffeeify --extension=\".coffee\" test/**/*.coffee -o test-bundle.js",
-  "on_exit": "rm test-bundle.js",
+  "before_tests": "browserify -t coffeeify --extension=\".coffee\" test/**/*.coffee -o test-bundle.js && browserify test/**/*.js -o test-bundle2.js",
+  "on_exit": "rm test-bundle.js test-bundle2.js",
   "serve_files": [
-    "test-bundle.js"
+    "test-bundle.js",
+    "test-bundle2.js"
   ],
   "test_page": "tests.mustache"
 }
