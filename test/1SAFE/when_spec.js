@@ -9,7 +9,7 @@ describe('When(fn)', () => {
   });
 
   describe('support async', () => {
-    When(function(done) {
+    When(function($, done) {
       setTimeout(function() {
         this.result = 'cool';
         done();
@@ -97,7 +97,7 @@ describe('When(result, fn)', () => {
 
 describe('When(result, fn(done))', () => {
   context('async callback', () => {
-    When('result', function(done) {
+    When('result', function($, done) {
       setTimeout(function() {
         done(null, 'cool');
       }.bind(this), 0);
@@ -106,15 +106,15 @@ describe('When(result, fn(done))', () => {
   });
 
   describe('node-style callback (2nd arg)', () => {
-    When('result', (done) => done(null, 'cool'));
+    When('result', ($, done) => done(null, 'cool'));
     Then(function() { return this.result === 'cool'; });
 
     describe('can handle falsy value', () => {
-      When('false', (cb) => cb(null, false));
-      When('zero', (cb) => cb(null, 0));
-      When('null', (cb) => cb(null, null));
-      When('emptystr', (cb) => cb(null, ""));
-      When('NaN', (cb) => cb(null, NaN));
+      When('false', ($, cb) => cb(null, false));
+      When('zero', ($, cb) => cb(null, 0));
+      When('null', ($, cb) => cb(null, null));
+      When('emptystr', ($, cb) => cb(null, ""));
+      When('NaN', ($, cb) => cb(null, NaN));
       Then(function() { return this["false"] === false; });
       And(function() { return this.zero === 0; });
       And(function() { return this["null"] === null; });
@@ -124,17 +124,17 @@ describe('When(result, fn(done))', () => {
   });
 
   describe('raw callback (1st arg)', () => {
-    When('result', (done) => done('cool'));
+    When('result', ($, done) => done('cool'));
     Then(function() { return this.result === 'cool'; });
   });
 
   describe('can capture thrown Error', () => {
-    When('result', function(done) { throw new Error('oops!'); });
+    When('result', function($, done) { throw new Error('oops!'); });
     Then(function() { return this.result.message === 'oops!'; });
   });
 
   describe('if return nothing, var is still set', () => {
-    When('result', (done) => done());
+    When('result', ($, done) => done());
     Then(function() { return this.result === undefined; });
     And(function() { return 'result' in this; });
   });

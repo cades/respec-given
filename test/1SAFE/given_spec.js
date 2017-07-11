@@ -32,7 +32,7 @@ describe('Given(fn)', () => {
     });
 
     describe('support async', () => {
-      Given(function(done) {
+      Given(function($, done) {
         setTimeout(function() {
           this.subject = function() { return 'cool' };
           done();
@@ -123,12 +123,12 @@ describe('Given(varname, fn)', () => {
     context('subject is a function that consume a node-style callback', () => {
       Given('subject', function() {
         return function(done) {
-          return setTimeout(function() {
+          setTimeout(function() {
             done(null, 'cool');
           }, 0);
         };
       });
-      When('result', function(cb) { return this.subject(cb); });
+      When('result', function($, cb) { return $.subject(cb); });
       Then(function() { return this.result === 'cool'; });
     });
 

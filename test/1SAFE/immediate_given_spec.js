@@ -30,7 +30,7 @@ describe("GivenI(var, fn)", () => {
       context('with callback', () => {
         Given('attacker', () => Character("Attacker"));
         Given('defender', () => Character("Defender"));
-        GivenI('original_hp', function(done) {
+        GivenI('original_hp', function($, done) {
           setTimeout(function() {
             done(null, this.defender.hit_points);
           }.bind(this), 0);
