@@ -83,13 +83,13 @@ describe('Stack', () => {
 
   context("with several items", () => {
     Given('initial_contents', () => ['second_item', 'top_item'])
-    GivenI('original_depth', () => @stack.depth())
+    GivenI('original_depth', $ => $.stack.depth())
 
     context("when pushing", () => {
       When($ => $.stack.push('new_item'))
 
       Then($ => $.stack.top() === 'new_item')
-      Then($ => $.stack.depth() === @original_depth + 1)
+      Then($ => $.stack.depth() === $.original_depth + 1)
     })
 
     context("when popping", () => {
@@ -97,7 +97,7 @@ describe('Stack', () => {
 
       Then($ => $.pop_result === 'top_item')
       Then($ => $.stack.top() === 'second_item')
-      Then($ => $.stack.depth() === @original_depth - 1)
+      Then($ => $.stack.depth() === $.original_depth - 1)
     })
   })
 ```
@@ -407,10 +407,10 @@ example:
 
 If you wish to see if the result of a When clause is an Error, you can use the following:
 
-    When result: -> badAction()
-    Then -> Failure(CustomError, /message/).matches @result
-    Then -> Failure(CustomError).matches @result
-    Then -> Failure(/message/).matches @result
+    When('result', () => badAction())
+    Then($ => Failure(CustomError, /message/).matches($.result))
+    Then($ => Failure(CustomError).matches($.result))
+    Then($ => Failure(/message/).matches($.result))
 
 
 ### <a name="transform-test-code"></a>Transform test code
