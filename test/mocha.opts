@@ -1,16 +1,10 @@
 --timeout 500
 --bail
 
---require coffee-script/register
---compilers coffee:coffee-script/register
-
 --require ./na-loader
---require ./na-loader/coffee
 --require ./enable-good-habit-mode
 
 -R spec
 -u respec-given
 
 test/**/*.js
-test/**/*.coffee
-

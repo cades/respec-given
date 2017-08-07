@@ -1,20 +1,20 @@
-describe("requirement for JS testing", function() {
+describe("requirement for JS testing", () => {
 
-  context('with ES5 function', function() {
-    Then(function(){
+  context('with ES5 function', () => {
+    Then(function() {
       return 1 === 1
     })
   })
 
-  context('with ES6 arrow function', function() {
+  context('with ES6 arrow function', () => {
 
-    context('explicitly return', function(){
+    context('explicitly return', () => {
       Then(() => {
         return 1 === 1
       })
     })
 
-    context('implicitly return', function() {
+    context('implicitly return', () => {
       Then(() => 1 === 1)
     })
 
