@@ -1,6 +1,6 @@
 {
   "name": "respec-given",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0",
   "description": "bring rspec-given to JS world, on mocha",
   "author": {
     "name": "cades kao",
@@ -12,7 +12,7 @@
     "diff": "2.2.3",
     "livescript": "1.5.0",
     "minimatch": "3.0.0",
-    "respec-given-core": "1.0.0-alpha.2",
+    "respec-given-core": "1.0.0",
     "stringifier": "1.3.0",
     "yamljs": "0.2.7"
   },
