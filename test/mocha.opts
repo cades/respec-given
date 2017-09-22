@@ -2,7 +2,6 @@
 --bail
 
 --require ./na-loader
---require ./enable-good-habit-mode
 
 -R spec
 -u respec-given

@@ -1,7 +1,6 @@
 --timeout 500
 
 --require ./na-loader
---require ./enable-good-habit-mode
 
 -R respec-given/mocha/tap-reporter
 -u respec-given

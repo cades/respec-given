@@ -1,8 +1,6 @@
 --timeout 500
 --bail
 
---require ./enable-good-habit-mode
-
 -R respec-given/mocha/tap-reporter
 -u respec-given
 

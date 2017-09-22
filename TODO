@@ -9,7 +9,6 @@ bdd interface
 把 rspec-given 的 test case porting 過來
 整理 code
 
-豐富 good-habit-mode 的檢查
 - Then 不許使用 label
 
 
