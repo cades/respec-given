@@ -19,11 +19,9 @@
 
 # respec-given
 
-respec-given is an extension to the mocha testing framework. It encourages cleaner, readable, and maintainable specs/tests using `Given`, `When`, and `Then`. It is a shameless tribute to Ludwig Magnusson's [mocha-gwt](https://github.com/TheLudd/mocha-gwt), Robert Fleischmann's [mocha-given](https://github.com/rendro/mocha-given), Justin Searl's [jasmine-given](https://github.com/searls/jasmine-given), James Sadler's [given.js](https://github.com/freshtonic/given.js), Sergii Stotskyi's [bdd-lazy-var](https://github.com/stalniy/bdd-lazy-var), and the origination of all: Jim Weirich's [rspec-given](https://github.com/jimweirich/rspec-given) gem.
+inspired by Jim Weirich's [rspec-given](https://github.com/jimweirich/rspec-given) ruby gem, this project reimplements rspec-given in JavaScript. while `rspec-given` extends `rspec` and `minitest`, `respec-given` is an extension to `mocha`.
 
-If you never heard any project mentioned above, I highly recommend you watching [How to Stop Hating your Test Suite](https://youtu.be/VD51AkG8EZw?t=8m42s) by Justin Searls, which inspired me to start this project.
-
-rspec-given is awesome. While embrace JavaScript's asynchronous nature, respec-given aims to strictly meet rspec-given's spec. Seriously.
+It encourages cleaner, readable, and maintainable specs/tests using `Given`, `When`, and `Then`.
 
 
 ## Demo
@@ -477,3 +475,8 @@ there are 3 Node.js loader out of the box:
     mocha --ui respec-given --require respec-given/na-loader/ls
     ```
 
+## Acknowledgments
+
+* [How to Stop Hating your Test Suite](https://youtu.be/VD51AkG8EZw?t=8m42s) for blowing my mind;
+* [rspec-given](https://github.com/jimweirich/rspec-given) for inspiration;
+* [mocha-gwt](https://github.com/TheLudd/mocha-gwt), [mocha-given](https://github.com/rendro/mocha-given), [jasmine-given](https://github.com/searls/jasmine-given), [given.js](https://github.com/freshtonic/given.js), [bdd-lazy-var](https://github.com/stalniy/bdd-lazy-var) for JS implementation reference.
