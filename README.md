@@ -2,6 +2,9 @@
   <img src="https://raw.githubusercontent.com/cades/respec-given/master/doc/logo.png" width="200" height="200" alt="respec-given test framework extension"/>
 
   <p>
+    <a href="https://npmjs.com/package/respec-given">
+      <img src="https://img.shields.io/npm/v/respec-given.svg" alt="npm version" />
+    </a>
     <a href="https://travis-ci.org/cades/respec-given">
       <img src="https://travis-ci.org/cades/respec-given.svg?branch=master" alt="Build Status" />
     </a>
