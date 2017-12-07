@@ -1,11 +1,14 @@
 <div align="center">
   <img src="https://raw.githubusercontent.com/cades/respec-given/master/doc/logo.png" width="200" height="200" alt="respec-given test framework extension"/>
 
-  [![Build Status](https://travis-ci.org/cades/respec-given.svg?branch=master)](https://travis-ci.org/cades/respec-given)
-
-  <a href="https://npmjs.com/package/respec-given">
-    <img src="https://img.shields.io/npm/dm/respec-given.svg">
-  </a>
+  <p>
+    <a href="https://travis-ci.org/cades/respec-given">
+      <img src="https://travis-ci.org/cades/respec-given.svg?branch=master" alt="Build Status" />
+    </a>
+    <a href="https://npmjs.com/package/respec-given">
+      <img src="https://img.shields.io/npm/dm/respec-given.svg">
+    </a>
+  </p>
 </div>
 
 # respec-given
