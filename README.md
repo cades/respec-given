@@ -11,6 +11,9 @@
     <a href="https://npmjs.com/package/respec-given">
       <img src="https://img.shields.io/npm/dm/respec-given.svg">
     </a>
+    <a href="https://app.fossa.io/projects/git%2Bgithub.com%2Fcades%2Frespec-given?ref=badge_shield" alt="FOSSA Status">
+      <img src="https://app.fossa.io/api/projects/git%2Bgithub.com%2Fcades%2Frespec-given.svg?type=shield"/>
+    </a>
   </p>
 </div>
 
