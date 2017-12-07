@@ -1,8 +1,8 @@
-<p align="center">
+<div align="center">
   <img src="https://raw.githubusercontent.com/cades/respec-given/master/doc/logo.png" width="200" height="200" alt="respec-given test framework extension"/>
 
   [![Build Status](https://travis-ci.org/cades/respec-given.svg?branch=master)](https://travis-ci.org/cades/respec-given)
-</p>
+</div>
 
 # respec-given
 
