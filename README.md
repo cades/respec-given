@@ -19,9 +19,12 @@
 
 # respec-given
 
-inspired by Jim Weirich's [rspec-given](https://github.com/jimweirich/rspec-given) ruby gem, this project reimplements rspec-given in JavaScript. while `rspec-given` extends `rspec` and `minitest`, `respec-given` is an extension to `mocha`.
+[rspec-given](https://github.com/jimweirich/rspec-given) in JavaScript, on top of [mocha](https://mochajs.org/).
 
-It encourages cleaner, readable, and maintainable specs/tests using `Given`, `When`, and `Then`.
+
+* encourages cleaner, readable, and maintainable tests using `Given`/`When`/`Then` API
+* test async code without boilerplate code. support callback/Promise/generator/Observable/async function
+* descriptive assertion message
 
 
 ## Demo
