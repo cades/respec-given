@@ -68,7 +68,7 @@ const Stack = require('../stack');
 describe('Stack', () => {
 
   const stack_with = (initial_contents) => {
-    var stack = Object.create(Stack);
+    const stack = Object.create(Stack);
     initial_contents.forEach(item => stack.push(item))
     return stack;
   };
@@ -432,7 +432,7 @@ Natural assertion loader is a tool which analysis test code's `Then` expression,
 Because in JavaScript, lexical binding can not be "captured" during execution time. Lexical binding is resolved at lex time, it's the world view of specific block of code. You have no way to share this view to others (in JavaScript). For example:
 
 ```js
-    var x = 1
+    const x = 1
     Then(() => x == 0)
 ```
 
