@@ -433,7 +433,7 @@ Because in JavaScript, lexical binding can not be "captured" during execution ti
 
 ```js
     const x = 1
-    Then(() => x == 0)
+    Then(() => x === 0)
 ```
 
 `Then` received a function, which returns `false`. Even `Then` can know `x`'s existence by analysis `fn.toString()`, `Then` have no way to access `x`. No.
