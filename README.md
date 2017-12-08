@@ -130,7 +130,7 @@ Instead of repeat Jim's words, I'll simply introduce API here.
 
 ```js
     // Given("varname", fn)
-    Given('stack', () => stack_with([]) )
+    Given('stack', () => stack_with([]))
 ```
 
 `$.stack` become accessible in other clauses.
@@ -140,8 +140,8 @@ The function will be evaluated until first access to `$.stack`. Once the functio
 If you have multiple `Given`s, like
 
 ```js
-    Given('stack1', () => stack_with([1, 2]) )
-    Given('stack2', () => stack_with([3, 4]) )
+    Given('stack1', () => stack_with([1, 2]))
+    Given('stack2', () => stack_with([3, 4]))
 ```
 
 you can use object notation as a shorthand:
@@ -160,19 +160,19 @@ There are several form of immediate Given. The first category is `Given(fn)`. Si
 
 ```js
     // Given(fn)
-    Given(($) => stack_with([]) )
+    Given($ => stack_with([]))
 ```
 
   Using this form, the function will be evaluated **immediately**.
 
 ```js
-    Given(() => new Promise(...) )
+    Given(() => new Promise(...))
 ```
 
   If the function returns a Promise, next statement will be executed until the promise is resolved.
 
 ```js
-    Given(() => new Observable(...) )
+    Given(() => new Observable(...))
 ```
 
   If the function returns an Observable, next statement will be executed until the observable is complete.
@@ -195,7 +195,7 @@ There are several form of immediate Given. The first category is `Given(fn)`. Si
 
 ```js
     // GivenI("varname", fn)
-    GivenI('stack', () => stack_with([]) )
+    GivenI('stack', () => stack_with([]))
 ```
 
   Using this form, the function will be evaluated **immediately** and the return value is assigned to `$.stack`.
@@ -229,13 +229,13 @@ Since ES6 introduce `let` keyword, to avoid name collision, respec-given choose 
   this function will be executed immediately.
 
 ```js
-    When(() => new Promise(...) )
+    When(() => new Promise(...))
 ```
 
   If the function returns a Promise, next statement will be executed until the promise is resolved.
 
 ```js
-    When(() => new Observable(...) )
+    When(() => new Observable(...))
 ```
 
   If the function returns an Observable, next statement will be executed until the observable is complete.
@@ -260,15 +260,15 @@ Since ES6 introduce `let` keyword, to avoid name collision, respec-given choose 
 
 ```js
     // When("result", fn)
-    When('pop_result', $ => $.stack.pop() )
+    When('pop_result', $ => $.stack.pop())
     Then($ => $.pop_result === 'top_item' )
 ```
 
   Using this form, the function will be executed immediately and the return value is assigned to `$.pop_result`.
 
 ```js
-    When('result1', () => Promise.resolve(1) )
-    When('result2', () => Promise.reject(2) )
+    When('result1', () => Promise.resolve(1))
+    When('result2', () => Promise.reject(2))
     Then($ => $.result1 === 1 )
     Then($ => $.result2 === 2 )
 ```
@@ -276,7 +276,7 @@ Since ES6 introduce `let` keyword, to avoid name collision, respec-given choose 
   If the function return a Promise, the promise will be resolved to a value (or an error) first, then assign the resolved value to `$.result`.
   
 ```js
-    When('result', () => throw new Error('oops!') )
+    When('result', () => throw new Error('oops!'))
     Then($ => $.result.message === 'oops' )
 ```
 
@@ -307,8 +307,8 @@ Since ES6 introduce `let` keyword, to avoid name collision, respec-given choose 
 If you have multiple `When`s, like
 
 ```js
-    When('result1', () => stack1.pop() )
-    When('result2', () => stack2.pop() )
+    When('result1', () => stack1.pop())
+    When('result2', () => stack2.pop())
 ```
 
 you can use object notation as a shorthand:
@@ -316,8 +316,8 @@ you can use object notation as a shorthand:
 ```js
     // When({hash})
     When({
-      result1: () => stack1.pop() ),
-      result2: () => stack2.pop() )
+      result1: () => stack1.pop()),
+      result2: () => stack2.pop())
     })
 ```
 
@@ -333,7 +333,7 @@ OK, let's see some example!
 
 ```js
     // Then(fn)
-    Then($ => expect($.result).to.be(1) )
+    Then($ => expect($.result).to.be(1))
 ```
 
 This form uses a 3rd-party assertion/matcher library, for example, chai.js.
