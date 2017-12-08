@@ -74,7 +74,7 @@ describe('Stack', () => {
   Invariant($ => $.stack.empty() === ($.stack.depth() === 0))
 
   context("with no items", () => {
-    Given('initial_contents', () => [] )
+    Given('initial_contents', () => [])
     Then($ => $.stack.depth() === 0)
 
     context("when pushing", => {
@@ -261,7 +261,7 @@ Since ES6 introduce `let` keyword, to avoid name collision, respec-given choose 
 ```js
     // When("result", fn)
     When('pop_result', $ => $.stack.pop())
-    Then($ => $.pop_result === 'top_item' )
+    Then($ => $.pop_result === 'top_item')
 ```
 
   Using this form, the function will be executed immediately and the return value is assigned to `$.pop_result`.
@@ -269,15 +269,15 @@ Since ES6 introduce `let` keyword, to avoid name collision, respec-given choose 
 ```js
     When('result1', () => Promise.resolve(1))
     When('result2', () => Promise.reject(2))
-    Then($ => $.result1 === 1 )
-    Then($ => $.result2 === 2 )
+    Then($ => $.result1 === 1)
+    Then($ => $.result2 === 2)
 ```
 
   If the function return a Promise, the promise will be resolved to a value (or an error) first, then assign the resolved value to `$.result`.
   
 ```js
     When('result', () => throw new Error('oops!'))
-    Then($ => $.result.message === 'oops' )
+    Then($ => $.result.message === 'oops')
 ```
 
   If the function throws an error synchronously, the error will be caught and assigned to `$.result`.
@@ -343,7 +343,7 @@ OK, let's see some example!
 This form uses a 3rd-party assertion/matcher library, for example, chai.js.
 
 ```js
-    Then($ => $.result === 1 )
+    Then($ => $.result === 1)
 ```
 
 This form returns a boolean expression, this is called [*natural assertion*](#natural-assertion). if the function returns a **boolean false**, this test is considered fail.
@@ -430,7 +430,7 @@ Because in JavaScript, lexical binding can not be "captured" during execution ti
 
 ```js
     var x = 1
-    Then(() => x == 0 )
+    Then(() => x == 0)
 ```
 
 `Then` received a function, which returns `false`. Even `Then` can know `x`'s existence by analysis `fn.toString()`, `Then` have no way to access `x`. No.
