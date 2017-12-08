@@ -323,7 +323,11 @@ you can use object notation as a shorthand:
 
 ### Then
 
-A *Then* clause forms a mocha test case of a test suite, it is like `it` in classical BDD style mocha test. But *Then* should only contain an assertion expression, and should not have any side effects.
+A *Then* clause forms a mocha test case of a test suite, it is like `it` in classical BDD style mocha test. Note that:
+
+1. *Then* should only contain an assertion expression
+2. *Then* should not have any side effects.
+3. *Then* only support synchronous operation. all asynchronous operation should be done in *When* clause.
 
 Let me quote [Jim's words](https://github.com/jimweirich/rspec-given#then) here:
 
@@ -343,20 +347,6 @@ This form uses a 3rd-party assertion/matcher library, for example, chai.js.
 ```
 
 This form returns a boolean expression, this is called [*natural assertion*](#natural-assertion). if the function returns a **boolean false**, this test is considered fail.
-
-```js
-    Then(($, done) =>
-      asyncVerification(function(err, res) {
-        done(err, res)
-      })
-    })
-```
-
-*Then* clause supports asynchronous operation, but **this style is discouraged** for 3 reasons:
-
-1. it makes report hard to read
-2. natural assertion can not handle this case
-3. all asynchronous operation should be done in *When* clause
 
 
 ### And
